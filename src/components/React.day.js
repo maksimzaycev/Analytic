@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from './React.nav';
 import Loader from './React.loader';
+import dataLoad from '../models/dataLoad';
 import moment from 'moment';
 import DayWorkspace from './React.day.workspace';
 import '../css/main.css';
@@ -24,13 +25,8 @@ class Day extends React.Component {
     }
 
     loadData(date) {
-        console.log("Загружаемая дата:");
-        console.log(date);
-        fetch(urlLogs + '?date=' + date)
-            .then(function(response) {
-                console.log(response);
-                return response.json();
-            })
+        dataLoad(urlLogs + '?date=' + date)
+            .then(responseLogs => JSON.parse(responseLogs))
             .then(result => this.parseData(result, date))
             .catch(e => console.log(e));
     }

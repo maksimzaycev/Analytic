@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import LogsTable from './React.logs.table';
 import AddLogs from './React.logs.add';
-
 import Userbar from './React.userbar';
 import dataLoad from '../models/dataLoad';
 import dataAdd from '../models/dataAdd';
