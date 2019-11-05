@@ -1,0 +1,170 @@
+.logs
+  padding 0px
+
+  &__title
+    font-weight 300
+    font-size 20px
+    color #000
+    margin-top 20px
+    margin-bottom 30px
+
+  &__table
+    border-top 1px solid #dde2e6
+    font-size 15px
+    width: 100%;
+
+    svg:hover
+      opacity 0.7
+      cursor pointer    
+
+  &__head-row
+    display flex
+    font-weight 400
+    border-bottom 1px solid #dde2e6
+
+  &__head-cell
+    padding 12px
+    text-align center
+
+    &--action
+      width 4%
+
+    &--date
+      width 10%
+
+    &--time 
+      width 10%
+
+    &--name
+      width 26%
+
+    &--company
+      width 23%
+
+    &--longFull
+      width 13%
+
+    &--pages
+      width 10%
+
+    &--actions
+      width 4%
+
+  &__body-cell
+    text-align center
+    padding 12px
+
+    &--action
+      width 4%
+
+    &--date
+      width 10%
+
+    &--time
+      width 10%
+
+    &--name
+      width 26%
+
+    &--company
+      width 23%
+
+    &--longFull
+      width 13%
+
+    &--pages
+      width 10%
+
+    &--actions
+      width 4%
+  
+    &--empty
+      width 32%
+
+    &--title
+      width 40%
+
+    &--null
+      width 100%
+      text-align center
+
+  &__body-row
+    font-weight 300
+
+    &--close
+      display flex
+      color black
+      border-bottom 1px solid #dde2e6
+
+      &:hover
+        background rgba(0,0,0,0.04)
+
+      svg
+  
+        &:hover
+          cursor pointer
+
+    &--main
+      color black
+      display flex
+      background rgba(0,0,0,0.04)
+      border-bottom 1px solid #dde2e6
+
+      svg   
+        
+        &:hover
+          cursor pointer
+      
+    &--more
+      display flex
+      color grey
+      border-bottom 1px solid #dde2e6
+  
+    &--null
+      display flex
+      border-bottom 1px solid #dde2e6
+
+  &__table-input
+    text-align center
+    font-size 16px
+    font-weight 300
+    width 100%
+    margin 0px
+    padding 0px
+    color #0079c2
+    border 0px solid #fff
+    background transparent
+    -webkit-appearance none
+    -moz-appearance none
+    appearance none
+  
+  &__addbar
+    background #fff
+    margin 20px
+    padding 20px
+    border 1px solid #d7d8db
+
+  &__data
+    background #fff
+    margin 20px
+    padding 20px
+    border 1px solid #d7d8db
+
+@media screen and (max-width: 1440px)
+
+  .logs
+    &__table
+      font-size 13px
+    
+    &__body-row
+      font-weight 300
+    
+    &__head-row
+      font-weight 400
+
+    &__input
+      font-size 13px
+    
+    &__table-input
+      font-size 13px
+  

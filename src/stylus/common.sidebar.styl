@@ -1,0 +1,41 @@
+.sidebar
+  
+  &__logotype
+    max-width 100%
+    margin 20px 0px
+
+
+  &__navigation
+    padding 0px
+    margin 0px
+
+  &__nav-item 
+    font-weight 300
+    padding 0px
+    display block
+    color rgba( 255,255,255,0.3)
+    font-size 13px
+    margin 25px 35px
+    text-decoration none
+    
+    &--clickable
+      color rgba(255,255,255,0.8)
+      coursor pointer
+      
+      &:hover
+        color #65c3ff
+
+    &--disabled
+      color rgba( 255,255,255,0.5)
+      coursor default !important
+      
+    &--selected
+      color #65c3ff
+      coursor pointer
+
+@media screen and (max-width: 1440px)
+    .sidebar
+
+      &__nav-item
+        font-size 12px
+        margin 25px 25px

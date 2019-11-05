@@ -1,0 +1,160 @@
+.table
+  width 100%
+  border-collapse 0px
+  border-spacing 0px
+
+  &__row
+
+    &--head
+      font-weight 400
+
+    &--body
+      font-weight 300
+
+    &--null
+      font-weight 300
+
+    &--active
+      color rgba(0,0,0,1)
+      background rgba(0,0,0,0)
+
+      &:hover
+        color rgba(0,0,0,1)
+        background rgba(0,0,0,0.03)
+
+    &--disabled
+      color rgba(0,0,0,0.3)
+      background rgba(0,0,0,0)
+
+      &:hover
+        color rgba(0,0,0,0.4)
+        background rgba(0,0,0,0.03)
+
+    &--error
+
+      &:hover
+        color #a20000
+        background #ffe4e4
+
+  &__cell
+    padding 12px
+    border-bottom 1px solid #dde2e6
+    text-align center
+
+    &--head
+      padding 18px
+
+    &--body
+      padding-left 12px
+
+    &--null
+      text-align center !important
+
+    &--statistics
+      width 5%
+
+    &--name
+      width 25%
+
+    &--company
+      width 20%
+
+    &--unit
+      width 20%
+
+    &--finishDate
+      width 12%
+
+    &--days
+      width 10%
+
+    &--action
+      width 8%
+
+    &--title
+      width 20%
+
+    &--person
+      width 20%
+
+    &--active
+      width 17%
+
+    &--rating
+      width 18%
+
+    &--color
+      width 6%
+      text-align left
+      align-items center
+
+    &--link
+      width 15%
+
+    &--time
+      width 15%
+
+    &--code
+      width 15%
+
+    &--text
+      width 70%
+
+    svg
+      margin-right 2px
+      
+  &__input
+    text-align center
+    font-size 16px
+    font-weight 300
+    width 100%
+    margin 0px
+    padding 0px
+    color #0079c2
+    border 0px solid #fff
+    background transparent
+    -webkit-appearance none
+    -moz-appearance none
+    appearance none
+
+    &--select
+      text-align-last center
+      text-align center
+
+    &--rating
+      width 30px
+      text-align left
+
+  &__actionIcon
+    color #0079c2
+
+    &:hover
+      opacity 0.7
+
+  &__circle
+    display inline-flex
+    align-self center
+    width 12px
+    height 12px
+    margin-right 2px
+    border-radius 6px
+    -moz-border-radius 6px
+    -webkit-border-radius 6px
+
+    &--green
+      background-color #388e3c
+
+    &--yellow
+      background-color #fdd835
+
+    &--red
+      background-color #c62828
+
+.green
+  color green
+
+.yellow
+  color yellow
+
+.red
+  color red 

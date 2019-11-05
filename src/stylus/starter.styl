@@ -1,0 +1,116 @@
+.start
+  margin 0px
+  padding 0px
+  height 100vh
+  box-sizing border-box
+  background rgba(64,150,255,1)
+  background -moz-linear-gradient(-45deg, rgba(64,150,255,1) 0%, rgba(2,74,163,1) 100%)
+  background -webkit-gradient(left top, right bottom, color-stop(0%, rgba(64,150,255,1)), color-stop(100%, rgba(2,74,163,1)))
+  background -webkit-linear-gradient(-45deg, rgba(64,150,255,1) 0%, rgba(2,74,163,1) 100%)
+  background -o-linear-gradient(-45deg, rgba(64,150,255,1) 0%, rgba(2,74,163,1) 100%)
+  background -ms-linear-gradient(-45deg, rgba(64,150,255,1) 0%, rgba(2,74,163,1) 100%)
+  background linear-gradient(135deg, rgba(64,150,255,1) 0%, rgba(2,74,163,1) 100%)
+
+  &__logotype 
+    position absolute
+    top 6%
+    left 50%
+    margin-left -150px
+
+  &__block 
+    position absolute
+    left 50%
+    top 30%
+    width 800px
+    margin-left -400px
+    border 1px solid rgba(0,0,0,0.4)
+
+  &__head
+    text-align center
+    color rgba(255,255,255,0.8)
+    background-color rgba(0,0,0,0.4)
+    margin 10px 10px 2px 10px
+    font-size 12px
+    padding 10px 0px
+    font-weight 500
+    text-transform uppercase
+    letter-spacing 1px
+
+  &__elements
+    display flex
+    flex-wrap wrap
+    justify-content space-around
+    align-content center
+    padding 5px
+
+  &__button
+    flex-grow 1
+    flex-shrink 2
+    width 200px
+    height 50px
+    font-size 12px
+    margin 5px
+    color #000
+    padding 15px
+    text-decoration none
+
+    &--clickable
+      color rgba(255,255,255,0.7)
+      background-color rgba(0,0,0,0.4)
+
+      &:hover
+        color rgba(255,255,255,0.9)
+        background-color rgba(0,0,0,0.5)
+        cursor pointer
+
+    &--disable
+      color rgba(255,255,255,0.7)
+      background-color rgba(0,0,0,0.2)
+
+  &__title
+    margin 5px
+    font-weight 500
+
+  &__person
+    margin 5px
+    font-weight 300
+    opacity 0.6
+
+  &__indicator
+    opacity 1
+    position relative
+    width 25px
+    height 80px
+    display flex
+    top -58px
+    left 93.2%
+    
+    &--green
+      position relative
+      height 80px
+      background grey
+    &--yellow
+      position relative
+      background grey
+      left 5px
+      height 80px
+    &--red
+      position relative
+      background grey
+      height 80px
+      left 10px
+
+  &__label
+    position relative
+    width 5px
+    bottom 0%
+    &--green
+      background green
+      display block
+    &--yellow
+      background yellow
+      display block
+    &--red
+      background red
+      display block
+      

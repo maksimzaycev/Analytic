@@ -1,0 +1,154 @@
+.objects
+  padding 0px
+
+  &__title
+    font-weight 300
+    font-size 20px
+    color #000
+    margin-top 20px
+    margin-bottom 30px
+  
+  &__addbar
+    background #fff
+    margin 20px
+    padding 20px
+    border 1px solid #d7d8db
+
+  &__data
+    background #fff
+    margin 20px
+    padding 20px
+    border 1px solid #d7d8db
+
+  &__table
+    width 100%
+    font-size 15px
+
+  &__row
+
+    &--head
+      font-weight 400
+
+    &--body
+      font-weight 300
+
+    &--null
+      font-weight 300
+
+  &__cell
+    padding 12px
+    border-bottom 1px solid #dde2e6
+    text-align center
+
+    &--head
+      padding 12px
+
+    &--body
+      padding-left 12px
+
+    &--null
+      text-align center !important
+
+    &--id
+      width 8%
+
+    &--title
+      width 15%
+
+    &--person
+      width 17%
+
+    &--active
+      width 17%
+
+    &--rating
+      width 18%
+
+    &--color
+      width 6%
+      text-align left
+      align-items center
+
+    &--link
+      width 15%
+
+    &--action
+      width 10%
+
+    svg
+      margin-right 2px
+      
+  &__edit
+    text-align center
+    font-size 15px
+    font-weight 300
+    width 100%
+    margin 0px
+    padding 0px
+    color #0079c2
+    border 0px solid #fff
+    background transparent
+    -webkit-appearance none
+    -moz-appearance none
+    appearance none
+
+    &--select
+      text-align-last center
+      text-align center
+
+    &--rating
+      width 30px
+      text-align left
+
+  &__actionIcon
+    color #0079c2
+
+    &:hover
+      opacity 0.7
+
+  &__circle
+    display inline-flex
+    align-self center
+    width 12px
+    height 12px
+    margin-right 2px
+    border-radius 6px
+    -moz-border-radius 6px
+    -webkit-border-radius 6px
+
+    &--green
+      background-color #388e3c
+
+    &--yellow
+      background-color #fdd835
+
+    &--red
+      background-color #c62828
+
+.green
+  color green
+
+.yellow
+  color yellow
+
+.red
+  color red
+
+@media screen and (max-width: 1440px)
+  .objects
+    &__table
+        font-size 13px
+    
+    &__cell
+
+      &--title
+        width 20%
+
+      &--active
+        width 12%
+    
+    &__node
+      width 11.8% !important
+
+    &__button
+      margin 0px !important

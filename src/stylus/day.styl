@@ -1,0 +1,75 @@
+.day
+    &__chart
+        padding 20px
+        background #fff
+        margin 20px
+        border 1px solid #d7d8db
+
+    &__title 
+        padding 0px
+        text-align left
+        font-weight 300
+        color #000
+        font-size 22px
+        margin 20px 0px 30px 0px
+        display inline-block
+
+    &__data
+        padding 20px
+        background #ffffff
+        margin 20px
+        border 1px solid #d7d8db
+
+    &__table
+        width 100%
+        font-size 15px
+        border-collapse 0px
+        border-spacing 0px
+        
+    &__row
+            
+        &--head
+            font-weight 500
+
+        &--body
+            font-weight 300
+            color rgba(0,0,0,1)
+            background rgba(0,0,0,0)
+            
+            &:hover
+                background rgba(0,0,0,0.03)
+
+    &__cell
+        padding 12px
+        border-bottom 1px solid #dde2e6
+        text-align center
+
+        &--head
+            padding 12px
+
+        &--body
+            padding-left 12px
+
+        &--null
+            text-align center !important
+
+        &--period
+            width 25%
+
+        &--users
+            width 25%
+        
+        &--visits
+            width 25%
+
+        &--views
+            width 25%
+
+@media screen and (max-width: 1440px)
+    .day
+        &__table
+            font-size 13px
+        
+        &__row
+            &--head
+                font-weight 400

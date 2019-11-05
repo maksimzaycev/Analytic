@@ -1,0 +1,87 @@
+.errors
+  padding 0px
+
+  &__title
+    font-weight 300
+    font-size 20px
+    color #000
+    margin-top 20px
+    margin-bottom 30px
+
+  &__data
+    background #fff
+    margin 20px
+    padding 20px
+    border 1px solid #d7d8db
+  
+  &__table
+    width 100%
+    border-collapse 0px
+    border-spacing 0px
+
+  &__row
+
+    &--head
+      font-weight 400
+
+    &--body
+      font-weight 300
+
+    &--null
+      font-weight 300
+
+    &--error
+      &:hover
+        color #a20000
+        background #ffe4e4
+
+  &__cell
+    padding 12px
+    border-bottom 1px solid #dde2e6
+    text-align center
+
+    &--head
+      padding 18px
+
+    &--body
+      padding-left 12px
+
+    &--null
+      text-align center !important
+
+    &--time
+      width 15%
+
+    &--code
+      width 15%
+
+    &--text
+      width 70%
+
+  &__toggle
+    display flex
+    font-size 16px
+    
+  &__button
+    padding 12px
+    width 33.33%
+    text-align center
+    font-weight 400
+
+    &--active
+      border-top 2px solid #0079c2
+      border-left 1px solid #dde2e6
+      border-right 1px solid #dde2e6
+
+    &--normal
+      border-bottom 1px solid #dde2e6
+      border-top 2px solid #fff
+      border-left 1px solid #fff
+      border-right 1px solid #fff
+
+      &:hover
+        border-top 2px solid #dde2e6
+        border-left 1px solid #dde2e6
+        border-right 1px solid #dde2e6
+        border-bottom 1px solid #dde2e6
+        background: #dde2e6

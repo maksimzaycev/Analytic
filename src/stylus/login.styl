@@ -1,0 +1,114 @@
+.login
+  height 100vh
+  padding 0px
+  margin 0px
+  font-family 'Roboto', sans-serif
+  font-size 12px
+  display flex
+  
+  &__left
+    width 30%
+    background-color #fff
+    background rgba(255,255,255,1)
+
+  &__right
+    width 70%
+    background: url(../img/login.jpg) no-repeat center center / cover;
+
+  &__logo
+    position relative
+    left 50%
+    top 100px
+    margin-left -100px
+    max-width 200px
+
+  &__block
+    top 50%
+    position relative
+    left 50%
+    margin-left -190px
+    margin-top -100px
+    width 300px
+    padding 40px
+    transition all 0.5s ease
+
+  &__input
+    background #e8e8e8
+    height 40px
+    width 100%
+    padding-left 10px
+    font-size 12px
+    font-family 'roboto'
+    font-weight 400
+    box-sizing border-box
+    margin: 10px 0px 15px 0px
+    -webkit-appearance none
+    border-radius 0px
+    -moz-border-radius 0px
+    -webkit-border-radius 0px
+    transition all 0.5s ease
+
+    &&::-moz-placeholder
+      color #b9b9b9
+
+    &&::-ms-input-placeholder
+      color #b9b9b9
+
+    &&::-webkit-input-placeholder
+      color #b9b9b9
+
+    &--error
+      border 0px solid #777
+      border-bottom 1px solid #b00303
+
+    &--normal
+      color #b9b9b9
+      border 0px solid #627375
+      border-bottom 1px solid #fff
+
+    &--active
+      color #80B6F7
+      border 0px solid #777777
+      border-bottom 1px solid #80B6F7
+    
+  &__label
+    background transparent
+    height 40px
+    width 100%
+    padding-left 0px
+    font-size 12px
+    font-family 'roboto'
+    font-weight 400
+    box-sizing border-box
+    margin: 10px 0px 10px 0px
+    -webkit-appearance none
+    border-radius 0px
+    -moz-border-radius 0px
+    -webkit-border-radius 0px
+    transition all 0.5s ease
+    color #7a7a7a
+
+  &__submit
+    color #fff
+    border 0px solid #fff
+    -webkit-appearance none
+    border-radius 0px
+    -moz-border-radius 0px
+    -webkit-border-radius 0px
+    margin 10px 0px 10px 0px
+    width 100%
+    height 40px
+    background #0079c2
+    font-family 'roboto'
+    font-weight 400
+    font-size 12px
+    transition all 0.3s ease
+
+    &:hover
+      background #1e5799
+
+.gradient
+  background #1e5799
+  background -moz-linear-gradient(-45deg,  #1e5799 0%, #2989d8 54%, #7db9e8 100%)
+  background -webkit-linear-gradient(-45deg,  #1e5799 0%,#2989d8 54%,#7db9e8 100%)
+  background linear-gradient(135deg,  #1e5799 0%,#2989d8 54%,#7db9e8 100%)

@@ -1,0 +1,54 @@
+@media screen and (max-width: 1440px)
+  
+  .start
+    
+    &__block
+      top 32%
+      width 700px
+      margin-left -350px
+
+    &__button
+      width 170px
+      height 45px
+      padding 10px
+    
+    &__indicator
+      opacity 0.8
+      position relative
+      width 25px
+      height 65px
+      display flex
+      top -53px
+      left 93%
+
+      &:hover
+        opacity 1
+      
+      &--green
+        position relative
+        height 65px
+        background grey
+      &--yellow
+        position relative
+        background grey
+        left 4px
+        height 65px
+      &--red
+        position relative
+        background grey
+        height 65px
+        left 8px
+
+    &__label
+      position relative
+      width 4px
+      bottom 0%
+      &--green
+        background green
+        display block
+      &--yellow
+        background yellow
+        display block
+      &--red
+        background red
+        display block
