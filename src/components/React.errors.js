@@ -21,21 +21,19 @@ class Errors extends React.Component {
     loadData() {
         let urlErrors = 'http://localhost:3000/errors';
 
-        let systemErrors;
-        dataLoad(urlErrors).then(errors => {
+        dataLoad(urlErrors)
+            .then(responseErrors => JSON.parse(responseErrors))
+            .then(result => this.parseData(result))
+            .catch(e => console.log(e));
+    }
 
-            systemErrors = JSON.parse(errors);
-            let systemErrorsData = this.sortSystemErrors(systemErrors);
-            console.log('Отсортированные ошибки:');
-            console.log(systemErrorsData);
+    parseData(systemErrors) {
+        let systemErrorsData = this.sortSystemErrors(systemErrors);
             
-            this.setState({
-                errors: systemErrorsData,
-                loading: true
-            });
-        }).catch(function(logs) {
-            console.log('error ' + logs);
-        })
+        this.setState({
+            errors: systemErrorsData,
+            loading: true
+        });
     }
 
     sortSystemErrors(systemErrors) {
@@ -43,9 +41,7 @@ class Errors extends React.Component {
             errors: [],
             criticals: [],
             warnings: []
-        };
-
-        
+        }; 
 
         for (let i = 0; i < systemErrors.length; i++) {
             if (systemErrors[i].type === 'error') {
