@@ -18,16 +18,16 @@ class Start extends React.Component {
     }
 
     loadData() {
-        var urlMo = 'http://localhost:3000/objects';
+        var urlObjects = 'http://localhost:3000/objects';
 
-        dataLoad(urlMo).then(data => {
-            this.setState({
-                startElements: JSON.parse(data),
-                loading: true
-            });
-        }).catch(function(data) {
-            console.log('error ' + data);
-        })
+        dataLoad(urlObjects)
+            .then(responseObjects => {
+                this.setState({
+                    startElements: JSON.parse(responseObjects),
+                    loading: true
+                });
+            })
+            .catch(e => console.log('error ' + e));
     }
 
     handleClick = event => {

@@ -3,6 +3,8 @@ import dataLoad from '../models/dataLoad';
 import { NavLink, Link } from 'react-router-dom';
 import '../css/main.css';
 
+const urlObjects = 'http://localhost:3000/objects';
+
 class Navigation extends React.Component {
     constructor(props) {
         super(props);
@@ -43,32 +45,30 @@ class Navigation extends React.Component {
     }
 
     loadData() {
-        var urlObjects = 'http://localhost:3000/objects';
-        var menuItems = [];
+        dataLoad(urlObjects)
+            .then(responseObjects => JSON.parse(responseObjects))
+            .then(result => this.parseData(result))
+            .catch(responseObjects => console.log('error ' + responseObjects)
+        );
+    }
 
-        dataLoad(urlObjects).then(objects => {
-            
-            menuItems = JSON.parse(objects);
-            
-            for (var i = 0; i < menuItems.length; i++) {
-                if (menuItems[i].active === false) {
-                    menuItems[i].status = 'sidebar__nav-item--disabled';
+    parseData(menuItems) {
+        for (var i = 0; i < menuItems.length; i++) {
+            if (menuItems[i].active === false) {
+                menuItems[i].status = 'sidebar__nav-item--disabled';
+            } else {
+                if (menuItems[i].id === this.props.activeItem) {
+                    menuItems[i].status = 'sidebar__nav-item--selected';
                 } else {
-                    if (menuItems[i].id === this.props.activeItem) {
-                        menuItems[i].status = 'sidebar__nav-item--selected';
-                    } else {
-                        menuItems[i].status = 'sidebar__nav-item--clickable';
-                    }
+                    menuItems[i].status = 'sidebar__nav-item--clickable';
                 }
             }
+        }
 
-            this.setState({
-                systemObjects: menuItems,
-                loading: true
-            });
-        }).catch(function(objects) {
-            console.log('error ' + objects);
-        })
+        this.setState({
+            systemObjects: menuItems,
+            loading: true
+        });
     }
 
     handleClick = event => {

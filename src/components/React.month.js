@@ -1,5 +1,6 @@
 import React from 'react';
 import Navigation from './React.nav';
+import dataLoad from '../models/dataLoad';
 import Loader from './React.loader';
 import moment from 'moment'
 import MonthWorkspace from './React.month.workspace';
@@ -24,12 +25,8 @@ class Month extends React.Component {
     }
 
     loadData(period) {
-        console.log("Загружаемый период:");
-        console.log(period);
-        fetch(urlLogs + '?period=' + period)
-            .then(function(response) {
-                return response.json();
-            })
+        dataLoad(urlLogs + '?period=' + period)
+            .then(responseLogs => JSON.parse(responseLogs))
             .then(result => this.parseData(result, period))
             .catch(e => console.log(e));
     }

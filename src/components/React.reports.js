@@ -38,37 +38,19 @@ class Reports extends React.Component {
     }
 
     loadData(period) {
-        console.log("Загружаемый период:");
-        console.log(period);
         dataLoad(urlLogs + '?period=' + period)
-            .then(responseLogs => {
-                console.log(responseLogs);
-                return JSON.parse(responseLogs);
-            })
+            .then(responseLogs => JSON.parse(responseLogs))
             .then(logs => this.parseData(logs, period))
             .catch(e => console.log(e));
     }
 
     parseData(usersLogs, period) {
-        console.log('Пришедшие логи:');
-        console.log(usersLogs);
-        
         let startDate = moment('01.' + period, 'DD.MM.YYYY');
-        console.log('Начальная дата:');
-        console.log(startDate);
-        
         let finishDate = moment('01.' + period, 'DD.MM.YYYY').add(1, 'month');
-        console.log('Конченая дата:');
-        console.log(finishDate);
         
         let allLogs = this.getAllLogs(usersLogs);
         let listReports = this.getReports(allLogs);
         let chartReports = this.getDataReports(listReports, allLogs, startDate.format('DD.MM.YYYY'), finishDate.format('DD.MM.YYYY'));
-        
-        console.log('Сформированные графики:');
-        console.log(chartReports);
-        
-        
         let defaultChart = this.getDefaultChart();
 
         this.setState({
