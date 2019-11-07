@@ -14,6 +14,8 @@ For instal for mac os run command:
 ### `cd data`
 ### `json-server data.json`
 
+A virtual database will be created to work on the port [http://localhost:3000](http://localhost:3000)
+
 ## Available Scripts
 
 Open new terminal console in the project directory and run:
@@ -21,4 +23,4 @@ Open new terminal console in the project directory and run:
 ### `npm start`
 
 Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
