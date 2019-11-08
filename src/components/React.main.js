@@ -32,8 +32,7 @@ const Main = () => (
             <Route path="/mode" component={Mode} />
             <Route path="/people" component={People} />
         </Switch>
-    </BrowserRouter>
-    
+    </BrowserRouter> 
 )
 
 export default Main;

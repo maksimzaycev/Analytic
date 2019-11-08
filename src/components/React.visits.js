@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Navigation from './React.nav';
+import dataLoad from '../models/dataLoad';
 import moment from 'moment';
 import Loader from './React.loader';
 import VisitsWorkspace from './React.visits.workspace';
@@ -7,68 +8,36 @@ import '../css/main.css';
 
 const urlLogs = 'http://localhost:3000/logs';
 
-class Visits extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activity: [],
-            loading: false,
-            settingPeriod: moment(new Date()).format('MM.YYYY')
-        };
-    }
+const visits = () => {
+    let [loading, setLoading] = useState(true);
+    let [period, setPeriod] = useState(moment(new Date()).format('MM.YYYY'));
+    let [logs, setLogs] = useState([]);
 
-    componentWillMount() {
-        this.loadData(this.state.settingPeriod);
-    }
+    useEffect(() => {
+        loadData(period);
+    },[]);
 
-    loadData(period) {
-        console.log("Загружаемый период:");
-        console.log(period);
-        fetch(urlLogs + '?period=' + period)
-            .then(function(response) {
-                console.log(response);
-                return response.json();
+    function loadData(curPeriod) {
+        dataLoad(urlLogs + '?period=' + curPeriod)
+            .then(responseLogs => JSON.parse(responseLogs))
+            .then(resultLogs => {
+                setLogs(resultLogs);
+                setLoading(false);
             })
-            .then(result => this.parseData(result, period))
-            .catch(e => console.log(e));    
+            .catch(error => console.log('error ' + error));
     }
 
-    parseData(usersLogs) {
-        var usersVisitsData = this.sortUsersViews(usersLogs);
-        this.setState({
-            activity: usersVisitsData,
-            loading: true
-        });
-    }
-
-    setDate = (changedDate) => {
-        this.setState({
-            loading: false
-        });
-
-        var formatedDate = moment(changedDate, 'YYYY-MM-DD').format('DD.MM.YYYY');
-        this.loadData(formatedDate);
-    }
-
-    setPeriod = (changedPeriod) => {
-        this.setState({
-            loading: false
-        });
-
-        this.loadData(changedPeriod);
-    }
-
-    sortUsersViews(usersLogs) {
-
+    
+    let usersVisitsData = useMemo (() => {
         var usersActivity= [];
 
-        for (let i = 0; i < usersLogs.length; i++) {
+        for (let i = 0; i < logs.length; i++) {
             var logAdded = false;
             var userActivity = {
-                userId: usersLogs[i].userId,
-                userName: usersLogs[i].name,
-                userCompany: usersLogs[i].company,
-                userViews: usersLogs[i].logItems.length,
+                userId: logs[i].userId,
+                userName: logs[i].name,
+                userCompany: logs[i].company,
+                userViews: logs[i].logItems.length,
                 userVisits: 1
             };
             
@@ -86,25 +55,28 @@ class Visits extends React.Component {
         }
 
         return usersActivity;
+    }, [visits]);
+
+
+    let changePeriod = (changedDate) => {
+        setLoading(true);
+        setPeriod(moment(changedDate, 'YYYY-MM-DD').format('DD.MM.YYYY'));
     }
 
-    render() {
-        return (
-            <div id="maskComponent">
-                {!this.state.loading ? <Loader /> : null}
-                <div className="sidebar" id="sidebar">
-                    <Navigation activeItem={7713} />
-                </div>
-                <div className="panel" id="panel">
-                    <VisitsWorkspace
-                        visitsItems={this.state.activity}
-                        setPeriod={this.setPeriod}
-                    />
-                </div>                        
+    return (
+        <div id="maskComponent">
+            {loading ? <Loader /> : null}
+            <div className="sidebar" id="sidebar">
+                <Navigation activeItem={7713} />
             </div>
-        );
-    }
+            <div className="panel" id="panel">
+                <VisitsWorkspace
+                    visitsItems={usersVisitsData}
+                    setPeriod={changePeriod}
+                />
+            </div>                        
+        </div>
+    );
 }
 
-export default Visits;
-
+export default visits;
