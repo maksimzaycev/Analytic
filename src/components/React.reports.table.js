@@ -1,12 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import { faSortAlphaUp as fasSortAlphaUp} from '@fortawesome/free-solid-svg-icons'
 import { faSortAlphaDown as fasSortAlphaDown} from '@fortawesome/free-solid-svg-icons'
-
 import { faSortNumericUp as fasSortNumericUp} from '@fortawesome/free-solid-svg-icons'
 import { faSortNumericDown as fasSortNumericDown} from '@fortawesome/free-solid-svg-icons'
-
 import ReportsRowTable from './React.reports.table.row';
 import ReportsRowNull from './React.reports.table.rowNull';
 import '../css/main.css';
