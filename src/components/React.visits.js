@@ -14,20 +14,17 @@ const visits = () => {
     let [logs, setLogs] = useState([]);
 
     useEffect(() => {
-        loadData(period);
-    },[]);
-
-    function loadData(curPeriod) {
-        dataLoad(urlLogs + '?period=' + curPeriod)
+        dataLoad(urlLogs + '?period=' + period)
             .then(responseLogs => JSON.parse(responseLogs))
             .then(resultLogs => {
                 setLogs(resultLogs);
                 setLoading(false);
+                console.log('Пришедшие логи:');
+                console.log(resultLogs);
             })
             .catch(error => console.log('error ' + error));
-    }
+    },[]);
 
-    
     let usersVisitsData = useMemo (() => {
         var usersActivity= [];
 
@@ -58,10 +55,22 @@ const visits = () => {
     }, [visits]);
 
 
-    let changePeriod = (changedDate) => {
+    let changePeriod = (changedPeriod) => {
         setLoading(true);
-        setPeriod(moment(changedDate, 'YYYY-MM-DD').format('DD.MM.YYYY'));
+        setPeriod(changedPeriod);
+        dataLoad(urlLogs + '?period=' + changedPeriod)
+            .then(responseLogs => JSON.parse(responseLogs))
+            .then(resultLogs => {
+                setLogs(resultLogs);
+                setLoading(false);
+                console.log('Пришедшие логи:');
+                console.log(resultLogs);
+            })
+            .catch(error => console.log('error ' + error));
     }
+
+    console.log('Текущие логи:');
+    console.log();
 
     return (
         <div id="maskComponent">
