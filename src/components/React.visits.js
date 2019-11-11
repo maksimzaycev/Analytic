@@ -70,6 +70,7 @@ const visits = () => {
                 <VisitsWorkspace
                     visitsItems={activity}
                     setPeriod={changePeriod}
+                    settingPeriod={period}
                 />
             </div>                        
         </div>
