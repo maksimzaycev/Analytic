@@ -9,32 +9,30 @@ import '../css/main.css';
 const urlLogs = 'http://localhost:3000/logs';
 
 const visits = () => {
-    let [loading, setLoading] = useState(true);
     let [period, setPeriod] = useState(moment(new Date()).format('MM.YYYY'));
-    let [logs, setLogs] = useState([]);
+    let [logs, setLogs] = useState({loading:true, list:[]});
 
     useEffect(() => {
         dataLoad(urlLogs + '?period=' + period)
             .then(responseLogs => JSON.parse(responseLogs))
             .then(resultLogs => {
-                setLogs(resultLogs);
-                setLoading(false);
                 console.log('Пришедшие логи:');
                 console.log(resultLogs);
+                setLogs({loading:false, list: resultLogs});
             })
             .catch(error => console.log('error ' + error));
-    },[]);
-
-    let usersVisitsData = useMemo (() => {
+    },[period]);
+    
+    let activity = useMemo (() => {
         var usersActivity= [];
-
-        for (let i = 0; i < logs.length; i++) {
+        
+        for (let i = 0; i < logs.list.length; i++) {
             var logAdded = false;
             var userActivity = {
-                userId: logs[i].userId,
-                userName: logs[i].name,
-                userCompany: logs[i].company,
-                userViews: logs[i].logItems.length,
+                userId: logs.list[i].userId,
+                userName: logs.list[i].name,
+                userCompany: logs.list[i].company,
+                userViews: logs.list[i].logItems.length,
                 userVisits: 1
             };
             
@@ -51,36 +49,26 @@ const visits = () => {
             }    
         }
 
+        console.log('Функция сортировки');
+
         return usersActivity;
-    }, [visits]);
+    }, [logs]);
 
 
     let changePeriod = (changedPeriod) => {
-        setLoading(true);
+        setLogs({loading: true, list: []});
         setPeriod(changedPeriod);
-        dataLoad(urlLogs + '?period=' + changedPeriod)
-            .then(responseLogs => JSON.parse(responseLogs))
-            .then(resultLogs => {
-                setLogs(resultLogs);
-                setLoading(false);
-                console.log('Пришедшие логи:');
-                console.log(resultLogs);
-            })
-            .catch(error => console.log('error ' + error));
     }
-
-    console.log('Текущие логи:');
-    console.log();
 
     return (
         <div id="maskComponent">
-            {loading ? <Loader /> : null}
+            {logs.loading ? <Loader /> : null}
             <div className="sidebar" id="sidebar">
                 <Navigation activeItem={7713} />
             </div>
             <div className="panel" id="panel">
                 <VisitsWorkspace
-                    visitsItems={usersVisitsData}
+                    visitsItems={activity}
                     setPeriod={changePeriod}
                 />
             </div>                        
