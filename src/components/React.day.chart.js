@@ -28,8 +28,6 @@ class DayChart extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(" * * * КОМПОНЕНТ ГРАФИКА С НОВЫМИ PROPS * * * ");
-        console.log(this.restructuralCharts(nextProps.charts))
 
         this.setState({
             charts: this.restructuralCharts(nextProps.charts)
