@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Navigation from './React.nav';
+import AppContext from './React.context';
 import dataLoad from '../models/dataLoad';
 import moment from 'moment';
 import Loader from './React.loader';
 import VisitsWorkspace from './React.visits.workspace';
 import '../css/main.css';
 
+const colors = ["#000000", "#eeeeee", "#ffffff", "#222222"];
 const urlLogs = 'http://localhost:3000/logs';
 
 const visits = () => {
@@ -16,8 +18,6 @@ const visits = () => {
         dataLoad(urlLogs + '?period=' + period)
             .then(responseLogs => JSON.parse(responseLogs))
             .then(resultLogs => {
-                console.log('Пришедшие логи:');
-                console.log(resultLogs);
                 setLogs({loading:false, list: resultLogs});
             })
             .catch(error => console.log('error ' + error));
@@ -49,8 +49,6 @@ const visits = () => {
             }    
         }
 
-        console.log('Функция сортировки');
-
         return usersActivity;
     }, [logs]);
 
@@ -67,11 +65,13 @@ const visits = () => {
                 <Navigation activeItem={7713} />
             </div>
             <div className="panel" id="panel">
-                <VisitsWorkspace
-                    visitsItems={activity}
-                    setPeriod={changePeriod}
-                    settingPeriod={period}
-                />
+                <AppContext.Provider value={{colors: colors, activity: activity, logs: logs}}>
+                    <VisitsWorkspace
+                        visitsItems={activity}
+                        setPeriod={changePeriod}
+                        settingPeriod={period}
+                    />
+                </AppContext.Provider>
             </div>                        
         </div>
     );

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import AppContext from './React.context';
 import '../css/main.css';
 
 const findVisits = (props) => {
@@ -17,6 +18,10 @@ const findVisits = (props) => {
 
         props.findVisits(foundUsers);
     }
+
+    const colors = useContext(AppContext);
+    console.log('Цвета в поиске');
+    console.log(colors);
 
     return (
         <input type="text" className="userbar__finder" onChange={(event) => handleSearch(event)} placeholder="Поиск..." />
