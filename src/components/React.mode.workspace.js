@@ -11,8 +11,7 @@ class ModeWorkspace extends React.Component {
         this.setPeriod = this.setPeriod.bind(this);
 
         this.state = {
-            curMonth: moment(new Date()).format('MM'),
-            curYear: moment(new Date()).format('YYYY')
+            defaultPeriod: moment(new Date()).format('MM.YYYY')
         };
     }
 
@@ -22,55 +21,15 @@ class ModeWorkspace extends React.Component {
     }
 
     render() {
-        var defaultPeriod;
-        switch(this.state.curMonth) {
-            case '01': 
-                defaultPeriod = 'Январь ';
-                break;
-            case '02': 
-                defaultPeriod = 'Февраль ';
-                break;
-            case '03': 
-                defaultPeriod = 'Март ';
-                break;
-            case '04': 
-                defaultPeriod = 'Апрель ';
-                break;
-            case '05': 
-                defaultPeriod = 'Май ';
-                break;
-            case '06': 
-                defaultPeriod = 'Июнь ';
-                break;
-            case '07': 
-                defaultPeriod = 'Июль ';
-                break;
-            case '08': 
-                defaultPeriod = 'Август ';
-                break;
-            case '09': 
-                defaultPeriod = 'Сентябрь ';
-                break;
-            case '10': 
-                defaultPeriod = 'Октябрь ';
-                break;
-            case '11': 
-                defaultPeriod = 'Ноябрь ';
-                break;
-            case '12': 
-                defaultPeriod = 'Декабрь ';
-                break;
-            default:
-                defaultPeriod = 'Январь ';
-                break;
-        };
-        defaultPeriod += this.state.curYear;
-
         return (
             <div className="mode">                
                 <div className="mode__chart">
                     <h2 className="mode__title">График нарушений режима за</h2>
-                    <select className="mode__period" onChange={this.setPeriod} defaultValue={defaultPeriod}>
+                    <select className="mode__period" onChange={this.setPeriod} defaultValue={this.state.defaultPeriod}>
+                        <option value="12.2019">Декабрь 2019</option>
+                        <option value="11.2019">Ноябрь 2019</option>
+                        <option value="10.2019">Октябрь 2019</option>
+                        <option value="09.2019">Сентябрь 2019</option>
                         <option value="08.2019">Август 2019</option>
                         <option value="07.2019">Июль 2019</option>
                         <option value="06.2019">Июнь 2019</option>
