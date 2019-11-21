@@ -1,102 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSort as fasSort} from '@fortawesome/free-solid-svg-icons'
 import DayRowTable from './React.day.table.row';
 import '../css/main.css';
 
-class DayTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            rows: this.props.rows,
-            waySortUsers: true,
-            waySortVisits: true,
-            waySortViews: true,
-            waySortTime: true
-        };
-    }
+const dayTable = (props) => {
+    let [rows, setRows] = useState(props.rows);
+    let [sortingUsers, setSortingUsers] = useState(false);
+    let [sortingTime, setSortingTime] = useState(false);
+    let [sortingVisits, setSortingVisits] = useState(false);
+    let [sortingViews, setSortingViews] = useState(false);
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            rows: nextProps.rows
-        });
-    }
+    useEffect(() => setRows(props.rows), [props.rows]);
 
-    sortByVisits = () => {
-        var toggleSort = this.state.waySortVisits;
-        var sortRows = this.state.rows;
+    const sortByVisits = () => {
+        var toggleSort = sortingVisits;
+        var sortRows = rows;
 
-        sortRows.sort(function(a, b) {
-            return a.visits - b.visits
-        });
-        
-        if (toggleSort) {
-            sortRows.reverse();
-        }
+        sortRows.sort((a, b) => a.visits - b.visits);
 
-        if (toggleSort) {
-            toggleSort = false;
-        } else {
-            toggleSort = true;
-        }
+        if (toggleSort) sortRows.reverse()
+        toggleSort ? toggleSort = false : toggleSort = true;
 
-        this.setState({
-            rows: sortRows,
-            waySortVisits: toggleSort
-        });
+        setRows(sortRows);
+        setSortingVisits(toggleSort);
     };
 
-    sortByViews = () => {
-        var toggleSort = this.state.waySortViews;
-        var sortRows = this.state.rows;
+    const sortByViews = () => {
+        var toggleSort = sortingViews;
+        var sortRows = rows;
 
-        sortRows.sort(function(a, b) {
-            return a.views - b.views
-        });
+        sortRows.sort((a, b) => a.views - b.views);
         
-        if (toggleSort) {
-            sortRows.reverse();
-        }
+        if (toggleSort) sortRows.reverse()
+        toggleSort ? toggleSort = false : toggleSort = true;
 
-        if (toggleSort) {
-            toggleSort = false;
-        } else {
-            toggleSort = true;
-        }
-
-        this.setState({
-            rows: sortRows,
-            waySortViews: toggleSort
-        });
+        setRows(sortRows);
+        setSortingViews(toggleSort);
     };
     
-    sortByUsers = () => {
-        var toggleSort = this.state.waySortUsers;
-        var sortRows = this.state.rows;
+    const sortByUsers = () => {
+        var toggleSort = sortingUsers;
+        var sortRows = rows;
 
-        sortRows.sort(function(a, b) {
-            return a.users - b.users
-        });
+        sortRows.sort((a, b) => a.users - b.users);
         
-        if (toggleSort) {
-            sortRows.reverse();
-        }
+        if (toggleSort) sortRows.reverse()
+        toggleSort ? toggleSort = false : toggleSort = true;
 
-        if (toggleSort) {
-            toggleSort = false;
-        } else {
-            toggleSort = true;
-        }
-
-        this.setState({
-            rows: sortRows,
-            waySortUsers: toggleSort
-        });
+        setRows(sortRows);
+        setSortingUsers(toggleSort);
     };
 
-    sortByTime = () => {
-        var toggleSort = this.state.waySortTime;
-        var sortRows = this.state.rows;
+    const sortByTime = () => {
+        var toggleSort = sortingTime;
+        var sortRows = rows;
 
         sortRows.sort(function(a, b) {
             var timeA = a.start.toLowerCase();
@@ -108,54 +66,42 @@ class DayTable extends React.Component {
             return 0
         });
 
-        if (toggleSort) {
-            sortRows.reverse();
-        }
+        if (toggleSort) sortRows.reverse()
+        toggleSort ? toggleSort = false : toggleSort = true;
 
-        if (toggleSort) {
-            toggleSort = false;
-        } else {
-            toggleSort = true;
-        }
-
-        this.setState({
-            rows: sortRows,
-            waySortTime: toggleSort
-        });
+        setRows(sortRows);
+        setSortingTime(toggleSort);
     };
 
-    render() {
-        return (
-            <table className="day__table">
-                <thead>
-                    <tr className="day__row--head">
-                        <td className="day__cell day__cell--head day__cell--period"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={this.sortByTime} /> Интервал</td>
-                        <td className="day__cell day__cell--head day__cell--users"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={this.sortByUsers} /> Пользователи</td>
-                        <td className="day__cell day__cell--head day__cell--visits"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={this.sortByVisits} /> Визиты</td>
-                        <td className="day__cell day__cell--head day__cell--views"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={this.sortByViews} /> Просмотры</td>
-                    </tr>
-                </thead>
-                <tbody>
-                {
-                    this.state.rows.map((row, i) => (
-                        <DayRowTable
-                            key={i}
-                            index={i}
-                            id={row.id}
-                            start={row.start}
-                            finish={row.finish}
-                            users={row.users}
-                            visits={row.visits}
-                            views={row.views}
-                        /> )
-                    )
-                }
-                </tbody>
+    return (
+        <table className="day__table">
+            <thead>
+                <tr className="day__row--head">
+                    <td className="day__cell day__cell--head day__cell--period"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={sortByTime} /> Интервал</td>
+                    <td className="day__cell day__cell--head day__cell--users"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={sortByUsers} /> Пользователи</td>
+                    <td className="day__cell day__cell--head day__cell--visits"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={sortByVisits} /> Визиты</td>
+                    <td className="day__cell day__cell--head day__cell--views"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={sortByViews} /> Просмотры</td>
+                </tr>
+            </thead>
+            <tbody>
+            {
+                rows.map((row, i) => (
+                    <DayRowTable
+                        key={i}
+                        index={i}
+                        id={row.id}
+                        start={row.start}
+                        finish={row.finish}
+                        users={row.users}
+                        visits={row.visits}
+                        views={row.views}
+                    /> )
+                )
+            }
+            </tbody>
 
-            </table>
-        );
-    }
-
+        </table>
+    );
 }
 
-export default DayTable;
+export default dayTable;

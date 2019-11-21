@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-vis/dist/style.css';
 import '../css/main.css';
 import {
@@ -11,88 +11,77 @@ import {
   DiscreteColorLegend
 } from 'react-vis';
 
-const ITEMS = [
-    {title: 'Пользователи', color: '#84c9f6', strokeWidth: 14},
-    {title: 'Визиты', color: '#3fa6e9', strokeWidth: 14},
-    {title: 'Просмотры', color: '#127bbf', strokeWidth: 14}
-];
+const dayChart = (props) => {
+    console.log('4546546');
+    console.log(props);
+    let [charts, setCharts] = useState(props.charts);
+    useEffect(() => setCharts(props.charts), [props.charts]);
 
-class DayChart extends React.Component {
-    constructor(props) {
-        super(props);
-        this.toggleChart = this.toggleChart.bind(this);
+    let legend = props.charts.filter((chart) => chart.title !== '')
+    
+    console.log(charts);
+    console.log(legend);
 
-        this.state = {
-            charts: []
-        };
+    const toggleChart = (event) => {
+        // var charts = this.props.charts;
+        // var presentButton = event.target;
+        // var presentButtonType = presentButton.getAttribute('data-type');
+
+        // if (presentButton.classList.contains('title__button--active')) {
+        //     presentButton.classList.remove('title__button--active');
+        //     presentButton.classList.add('title__button--disabled');
+        //     charts[presentButtonType].display = false;
+        //     this.setState({
+        //         charts: this.restructuralCharts(charts)
+        //     });
+        // } else {
+        //     presentButton.classList.remove('title__button--disabled');
+        //     presentButton.classList.add('title__button--active');
+        //     charts[presentButtonType].display = true;
+        //     this.setState({
+        //         charts: this.restructuralCharts(charts)
+        //     });
+        // }
     }
 
-    componentWillReceiveProps(nextProps) {
+    const widthChart = Math.round(document.body.clientWidth * 0.80);
 
-        this.setState({
-            charts: this.restructuralCharts(nextProps.charts)
-        });
-    }
-
-    restructuralCharts(charts) {
-        var resultCharts = Object.keys(charts).map(function(key) {
-            return charts[key];
-        });
-
-        return resultCharts;
-    }
-
-    toggleChart(event) {
-        var charts = this.props.charts;
-        var presentButton = event.target;
-        var presentButtonType = presentButton.getAttribute('data-type');
-
-        if (presentButton.classList.contains('title__button--active')) {
-            presentButton.classList.remove('title__button--active');
-            presentButton.classList.add('title__button--disabled');
-            charts[presentButtonType].display = false;
-            this.setState({
-                charts: this.restructuralCharts(charts)
-            });
-        } else {
-            presentButton.classList.remove('title__button--disabled');
-            presentButton.classList.add('title__button--active');
-            charts[presentButtonType].display = true;
-            this.setState({
-                charts: this.restructuralCharts(charts)
-            });
-        }
-    }
-
-    render() {
-        var widthChart = Math.round(document.body.clientWidth * 0.80);
-        return (
-            <div>
-                <div className="title__buttons">
-                    <span className="title__button title__button--active" onClick={this.toggleChart} data-type="views">Просмотры</span>
-                    <span className="title__button title__button--active" onClick={this.toggleChart} data-type="visits">Визиты</span>
-                    <span className="title__button title__button--active" onClick={this.toggleChart} data-type="users">Пользователи</span>
-                </div>  
-                <XYPlot xType="ordinal" width={widthChart} height={300}>
-                    <HorizontalGridLines/>
-                    <VerticalGridLines />
-                    <XAxis tickLabelAngle={0} />
-                    <YAxis />
-                    {   
-                        this.state.charts.map(chart => (
-                            chart.display ?
-                            <VerticalBarSeries
-                                key={chart.chartId}
-                                data={chart.data}
-                                color={chart.color}
-                            /> : null
-                        ))
-                    }
-                </XYPlot>
-                <DiscreteColorLegend className="chart__legend" width={400} items={ITEMS} />
-            </div>
-        );
-    }
+    return (
+        <div>
+            <div className="title__buttons">
+                {
+                    charts.map(chart => (
+                        (chart.title !== '') ?
+                        <span
+                            key={chart.chartId}
+                            className={chart.display ? 'title__button title__button--active' : 'title__button title__button--disabled' }
+                            onClick={toggleChart}
+                            data-type={chart.name}
+                        >
+                            {chart.title}
+                        </span> : null  
+                    ))
+                }
+            </div>  
+            <XYPlot xType="ordinal" width={widthChart} height={300}>
+                <HorizontalGridLines/>
+                <VerticalGridLines />
+                <XAxis tickLabelAngle={0} />
+                <YAxis />
+                {   
+                    charts.map(chart => (
+                        chart.display ?
+                        <VerticalBarSeries
+                            key={chart.chartId}
+                            data={chart.data}
+                            color={chart.color}
+                        /> : null
+                    ))
+                }
+            </XYPlot>
+            <DiscreteColorLegend className="chart__legend" width={400} items={legend} />
+        </div>
+    );
 }
 
-export default DayChart;
+export default dayChart;

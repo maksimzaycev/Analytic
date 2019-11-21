@@ -1,61 +1,33 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import DayTable from './React.day.table';
 import DayChart from './React.day.chart';
-import FindDay from './React.day.find';
-import moment from 'moment'
-import Userbar from './React.userbar';
+import moment from 'moment';
 import 'react-vis/dist/style.css';
 import '../css/main.css';
 
-class DayWorkspace extends React.Component {
-    constructor(props) {
-        super(props);
-        this.setDate = this.setDate.bind(this);
+const dayWorkspace = (props) => {
+    let [period, setPeriod] = useState(props.period);
+    let [charts, setCharts] = useState(props.charts);
+    let [table, setTable] = useState(props.table);
 
-        this.state = {
-            charts: props.chartDay,
-            rows: props.tableDay,
-            changedRows: props.tableDay
-        };
-    }
+    useEffect(() => setPeriod(props.period), [props.period]);
+    useEffect(() => setCharts(props.charts), [props.charts]);
+    useEffect(() => setTable(props.table), [props.table]);
 
-    setDate(event) {
-        var newDate = event.target.value;
-        this.props.setDate(newDate);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            charts: nextProps.chartDay,
-            rows: nextProps.tableDay,
-            changedRows: nextProps.tableDay
-        });
-    }
-
-    findRows = (foundCharts) => {
-        this.setState({
-            changedRows: foundCharts
-        });
-    };
-
-    render() {
-        return (
-            <div className="day">
-                <Userbar>
-                    <FindDay presentRows={this.state.rows} find={this.findRows} />
-                    <input type="date" className="userbar__date" onChange={this.setDate} defaultValue={moment(new Date()).format('YYYY-MM-DD')}/>
-                </Userbar>
-                <div className="day__chart">
-                    <h2 className="day__title">Суточный мониторинг нагрузки на систему за {this.props.settingDate}</h2>
-                    <DayChart charts={this.props.charts} />
-                </div>
-                <div className="day__data">
-                    <h2 className="day__title">Показатели активности по часам</h2>
-                    <DayTable rows={this.state.changedRows} />
-                </div>
+    return (
+        <div className="day">
+            <div className="day__chart">
+                <h2 className="day__title">Суточный мониторинг нагрузки на систему за</h2>
+                <input type="date" className="day__period" onChange={(event) => {props.changePeriod(event.target.value)}} defaultValue={moment(period, 'DD.MM.YYYY').format('YYYY-MM-DD')}/>
+                <DayChart charts={charts} />
             </div>
-        );
-    }
+            <div className="day__data">
+                <h2 className="day__title">Показатели активности по часам</h2>
+                <DayTable rows={table} />
+            </div>
+        </div>
+    );
+    
 }
 
-export default DayWorkspace;
+export default dayWorkspace;

@@ -9,7 +9,7 @@ import '../css/main.css';
 const day = () => {
     let [period, setPeriod] = useState(moment(new Date()).format('DD.MM.YYYY'));
     let [logs, setLogs] = useState({loading:true, list:[]});
-    let [charts, setCharts] = useState({});
+    let [charts, setCharts] = useState([]);
     let [table, setTable] = useState([]);
 
     useEffect(() => {
@@ -29,40 +29,51 @@ const day = () => {
     }
 
     const parseData = (logsList) => {
-        console.log('Состояние текущей даты: ');
-        console.log(period);
-
         let chartDayUsers = getChartDayUsers(logsList);
         let chartDayVisits = getChartDayVisits(logsList);
         let chartDayViews = getChartDayViews(logsList);
         let chartDayDefault = getChartDayDefault();
 
-        setCharts({
-            visits: {
-                chartId: 4501,
-                data: chartDayVisits,
-                display: true,
-                color: '#3fa6e9'
-            },
-            views: {
-                chartId: 4502,
-                data: chartDayViews,
-                display: true,
-                color: '#127bbf'
-            },
-            users: {
-                chartId: 4503,
-                data: chartDayUsers,
-                display: true,
-                color: '#84c9f6'
-            },
-            default: {
-                chartId: 4504,
-                data: chartDayDefault,
-                display: true,
-                color: '#127bbf'
-            }
-        });
+        setCharts(
+            [
+                {
+                    chartId: 4501,
+                    title: 'Визиты',
+                    name: 'visits',
+                    data: chartDayVisits,
+                    strokeWidth: 14,
+                    display: true,
+                    color: '#3fa6e9'
+                },
+                {
+                    chartId: 4502,
+                    title: 'Просмотры',
+                    name: 'views',
+                    data: chartDayViews,
+                    strokeWidth: 14,
+                    display: true,
+                    color: '#127bbf'
+                },
+                {
+                    chartId: 4503,
+                    title: 'Пользователи',
+                    name: 'users',
+                    data: chartDayUsers,
+                    strokeWidth: 14,
+                    display: true,
+                    color: '#84c9f6'
+                },
+                {
+                    chartId: 4504,
+                    title: '',
+                    name: 'default',
+                    data: chartDayDefault,
+                    strokeWidth: 14,
+                    display: true,
+                    color: '#127bbf'
+                }
+            ]
+        );
 
         setTable(getTable(chartDayVisits, chartDayViews, chartDayUsers));
     }
@@ -189,9 +200,9 @@ const day = () => {
         return dayData;
     }
 
-    const setDate = (changedDate) => {
+    const changePeriod = (changedDate) => {
         let formatedChangedDate = moment(changedDate, 'YYYY-MM-DD').format('DD.MM.YYYY');
-
+        console.log(formatedChangedDate);
         setLogs({loading: true, list: []});
         setPeriod(formatedChangedDate);
     }
@@ -205,9 +216,9 @@ const day = () => {
             <div className="panel" id="panel">
                 <DayWorkspace
                     charts={charts}
-                    tableDay={table}
-                    settingDate={period}
-                    setDate={setDate}
+                    table={table}
+                    period={period}
+                    changePeriod={changePeriod}
                 />
             </div>                        
         </div>
