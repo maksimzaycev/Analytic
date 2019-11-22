@@ -28,7 +28,7 @@ class ModeChart extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         console.log(" * * * КОМПОНЕНТ ГРАФИКА С НОВЫМИ PROPS * * * ");
         console.log(this.restructuralCharts(nextProps.charts))
 

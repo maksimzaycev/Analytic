@@ -161,7 +161,7 @@ class AddLogs extends React.Component {
             unUniqueId = false;
 
             for (let i = 0; i < currentLogs.length; i++) {
-                if (currentLogs[i].id == newId) {
+                if (currentLogs[i].id === newId) {
                     unUniqueId = true;
                 }
             }
@@ -180,7 +180,7 @@ class AddLogs extends React.Component {
 
             for (let i = 0; i < currentLogs.length; i++) {
                 for (let j = 0; j < currentLogs[i].logItems.length; j++) {
-                    if (currentLogs[i].logItems[j].id == newId) {
+                    if (currentLogs[i].logItems[j].id === newId) {
                         unUniqueId = true;
                     }
                 }

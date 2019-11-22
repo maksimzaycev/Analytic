@@ -16,7 +16,7 @@ class ErrorsTable extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         var sortRows = nextProps.rows;
         var toggleSort = this.state.waySortTime;
 

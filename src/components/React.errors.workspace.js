@@ -14,7 +14,7 @@ class ErrorsWorkspace extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             rows: nextProps.errorsItems.criticals,
             changedRows: nextProps.errorsItems.criticals
@@ -47,9 +47,9 @@ class ErrorsWorkspace extends React.Component {
                 <div className="errors__data">
                     <h2 className="errors__title">Учетные записи пользователей</h2>
                     <div className="errors__toggle">
-                        <div className={'errors__button ' + (this.state.type == 'criticals' ? 'errors__button--active' : 'errors__button--normal')} data-type="criticals" onClick={this.toggleTableType}>Критические</div>
-                        <div className={'errors__button ' + (this.state.type == 'errors' ? 'errors__button--active' : 'errors__button--normal')} data-type="errors" onClick={this.toggleTableType}>Ошибки</div>
-                        <div className={'errors__button ' + (this.state.type == 'warnings' ? 'errors__button--active' : 'errors__button--normal')} data-type="warnings" onClick={this.toggleTableType}>Предупреждения</div>
+                        <div className={'errors__button ' + (this.state.type === 'criticals' ? 'errors__button--active' : 'errors__button--normal')} data-type="criticals" onClick={this.toggleTableType}>Критические</div>
+                        <div className={'errors__button ' + (this.state.type === 'errors' ? 'errors__button--active' : 'errors__button--normal')} data-type="errors" onClick={this.toggleTableType}>Ошибки</div>
+                        <div className={'errors__button ' + (this.state.type === 'warnings' ? 'errors__button--active' : 'errors__button--normal')} data-type="warnings" onClick={this.toggleTableType}>Предупреждения</div>
                     </div>
                     <ErrorsTable rows={this.state.changedRows} />
                 </div>

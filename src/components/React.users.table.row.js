@@ -23,7 +23,7 @@ class UsersManagerRowTable extends React.Component {
         };
     }
     
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             id: nextProps.id,
             name: nextProps.name,

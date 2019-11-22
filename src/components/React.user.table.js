@@ -17,7 +17,7 @@ class UserTable extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         var sortRows = nextProps.rows;
 
         sortRows.sort(function(a, b) {

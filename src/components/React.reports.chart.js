@@ -19,7 +19,7 @@ class ReportsChart extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             charts: nextProps.chartReports
         });

@@ -15,6 +15,7 @@ const people = (props) => {
             .then(responseUsers => JSON.parse(responseUsers))
             .then(resultUsers => {
                 console.log(resultUsers);
+                console.log(users);
                 setUsers(resultUsers);
                 setLoading(false);
             })

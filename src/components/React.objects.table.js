@@ -17,7 +17,7 @@ class ObjectsTable extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             rows: nextProps.rows
         });

@@ -21,7 +21,7 @@ class UsersWorkspace extends React.Component {
         };
     }
     
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let users = nextProps.users;
         for (let i = 0; i < users.length; i++) {
             users[i].status = this.getStatus(users[i].finishDate);
