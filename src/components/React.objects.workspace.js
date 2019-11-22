@@ -20,7 +20,7 @@ class ObjectsWorkspace extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.setState({ 
             rows: this.props.objects,
             changedRows: this.props.objects
