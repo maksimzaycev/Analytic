@@ -6,23 +6,21 @@ import moment from 'moment';
 import DayWorkspace from './React.day.workspace';
 import '../css/main.css';
 
+const urlLogs = 'http://localhost:3000/logs';
+
 const day = () => {
     let [period, setPeriod] = useState(moment(new Date()).format('DD.MM.YYYY'));
     let [logs, setLogs] = useState({loading:true, list:[]});
     let [charts, setCharts] = useState([]);
     let [table, setTable] = useState([]);
 
-    useEffect(() => {
-        loadingData();
-    }, [period]);
-
-    const urlLogs = 'http://localhost:3000/logs';
+    useEffect(() => loadingData(), [period]);
 
     const loadingData = () => {
         dataLoad(urlLogs + '?date=' + period)
             .then(responseLogs => JSON.parse(responseLogs))
             .then(result => {
-                setLogs({loading: false, list: result});
+                setLogs({loading: false, list: result})
                 parseData(result, period);
             })
             .catch(e => console.log(e));

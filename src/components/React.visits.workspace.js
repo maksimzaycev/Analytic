@@ -8,17 +8,10 @@ const visitsWorkspace = (props) => {
     let [visits, setVisits] = useState(props.visitsItems);
     let [presentVisits, setPresentVisits] = useState(props.visitsItems);
     
-    useEffect(() => {
-        setVisits(props.visitsItems);
-    },[props.visitsItems]);
-
-    useEffect(() => {
-        setPresentVisits(props.visitsItems);
-    },[props.visitsItems]);
+    useEffect(() => setVisits(props.visitsItems),[props.visitsItems]);
+    useEffect(() => setPresentVisits(props.visitsItems),[props.visitsItems]);
     
-    let findVisits = (filtredVisits) => {
-        setPresentVisits(filtredVisits);
-    }
+    let findVisits = (filtredVisits) => setPresentVisits(filtredVisits);
 
     return (
         <div className="visits">
