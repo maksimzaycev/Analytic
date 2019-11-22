@@ -101,7 +101,6 @@ class AddUsersManager extends React.Component {
     }
 
     render() {
-
         return (
             <form className="users__form" id="send__form" method="post">
                 <div className="users__node">
