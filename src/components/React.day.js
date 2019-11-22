@@ -42,7 +42,7 @@ const day = () => {
                     name: 'visits',
                     data: chartDayVisits,
                     strokeWidth: 14,
-                    display: true,
+                    display: false,
                     color: '#3fa6e9'
                 },
                 {
@@ -202,7 +202,6 @@ const day = () => {
 
     const changePeriod = (changedDate) => {
         let formatedChangedDate = moment(changedDate, 'YYYY-MM-DD').format('DD.MM.YYYY');
-        console.log(formatedChangedDate);
         setLogs({loading: true, list: []});
         setPeriod(formatedChangedDate);
     }

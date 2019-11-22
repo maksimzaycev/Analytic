@@ -12,36 +12,22 @@ import {
 } from 'react-vis';
 
 const dayChart = (props) => {
-    console.log('4546546');
-    console.log(props);
     let [charts, setCharts] = useState(props.charts);
     useEffect(() => setCharts(props.charts), [props.charts]);
 
     let legend = props.charts.filter((chart) => chart.title !== '')
-    
-    console.log(charts);
-    console.log(legend);
 
     const toggleChart = (event) => {
-        // var charts = this.props.charts;
-        // var presentButton = event.target;
-        // var presentButtonType = presentButton.getAttribute('data-type');
+        let buttonName = event.target.getAttribute('data-type');
+        let toggleCharts = charts;
 
-        // if (presentButton.classList.contains('title__button--active')) {
-        //     presentButton.classList.remove('title__button--active');
-        //     presentButton.classList.add('title__button--disabled');
-        //     charts[presentButtonType].display = false;
-        //     this.setState({
-        //         charts: this.restructuralCharts(charts)
-        //     });
-        // } else {
-        //     presentButton.classList.remove('title__button--disabled');
-        //     presentButton.classList.add('title__button--active');
-        //     charts[presentButtonType].display = true;
-        //     this.setState({
-        //         charts: this.restructuralCharts(charts)
-        //     });
-        // }
+        for (let i = 0; i < toggleCharts.length; i++) {
+            if (toggleCharts[i].name === buttonName) {
+                toggleCharts[i].display = !toggleCharts[i].display;
+            }
+        }
+
+        setCharts(toggleCharts);
     }
 
     const widthChart = Math.round(document.body.clientWidth * 0.80);
@@ -62,7 +48,7 @@ const dayChart = (props) => {
                         </span> : null  
                     ))
                 }
-            </div>  
+            </div>
             <XYPlot xType="ordinal" width={widthChart} height={300}>
                 <HorizontalGridLines/>
                 <VerticalGridLines />
