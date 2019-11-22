@@ -13,8 +13,8 @@ class Users extends React.Component {
             loading: false
         };
     }
-
-    componentWillMount() {
+    
+    UNSAFE_componentWillMount() {
         this.loadData();
     }
 
