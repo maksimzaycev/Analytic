@@ -56,7 +56,7 @@ class AddObjects extends React.Component {
             unUniqueId = false;
 
             for (let i = 0; i < currentObjects.length; i++) {
-                if (currentObjects[i].id == newId) {
+                if (currentObjects[i].id === newId) {
                     unUniqueId = true;
                 }
             }

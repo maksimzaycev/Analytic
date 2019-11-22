@@ -122,7 +122,7 @@ class Reports extends React.Component {
             while (moment(finish.format('YYYY-MM-DD')).isAfter(start.format('YYYY-MM-DD'))) {
                 let visitsOnDay = 0;
                 for (let z = 0; z < allLogs.length; z++) {
-                    if ((allLogs[z].date == start.format('DD.MM')) && (allLogs[z].title === presentReport.name)) {
+                    if ((allLogs[z].date === start.format('DD.MM')) && (allLogs[z].title === presentReport.name)) {
                         visitsOnDay++;
                     }
                 }

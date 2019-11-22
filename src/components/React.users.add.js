@@ -50,7 +50,7 @@ class AddUsersManager extends React.Component {
             unUniqueId = false;
 
             for (let i = 0; i < currentUsers.length; i++) {
-                if (currentUsers[i].id == newId) {
+                if (currentUsers[i].id === newId) {
                     unUniqueId = true;
                 }
             }
