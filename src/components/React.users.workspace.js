@@ -16,9 +16,6 @@ const usersWorkspace = (props) => {
 
     let findUsers = (filtredVisits) => setPresentUsers(filtredVisits);
 
-    console.log('Список пользователей в workspace');
-    console.log(props.users);
-
     return (
         <div>
             <Userbar>
@@ -32,8 +29,8 @@ const usersWorkspace = (props) => {
                 <h2 className="users__title">Учетные записи пользователей</h2>
                 <UsersTable
                     rows={presentUsers}
-                    remove={props.deleteUser}
-                    update={props.updateUser}/>
+                    deleteUser={props.deleteUser}
+                    updateUser={props.updateUser}/>
             </div>
         </div>
     );
