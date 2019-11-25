@@ -23,7 +23,7 @@ const usersWorkspace = (props) => {
             </Userbar>
             <div className="users__addbar">
                 <h2 className="users__title">Панель управления пользователями</h2>
-                <AddUsers add={props.addUser} currentUsers={users}/>
+                <AddUsers addUser={props.addUser} currentUsers={users}/>
             </div>
             <div className="users__data">
                 <h2 className="users__title">Учетные записи пользователей</h2>

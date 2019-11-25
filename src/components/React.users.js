@@ -53,7 +53,7 @@ const users = () => {
         let allUsers = users.list.filter(user => user.id !== deleteId);
         dataDelete(urlUsers, deleteId)
             .then(() => setUsers({loading: false, list: allUsers}))
-            .catch(users => console.log('error ' + users));
+            .catch(error => console.log('error ' + error));
     };
 
     const updateUser = (user) => {
@@ -66,26 +66,17 @@ const users = () => {
 
         dataUpdate(urlUsers, refreshUser, user.id)
             .then(() => setUsers({loading: false, list: allUsers}))
-            .catch((users) => console.log('error ' + users));
+            .catch(error => console.log('error ' + error));
     };
 
-    const addUser = (id, name, company, unit, finishDate) => {
-        var allUsersData = this.state.rows;
-        var newUserData = {
-            id: id,
-            name: name,
-            company: company,
-            unit: unit,
-            finishDate: finishDate
-        };
+    const addUser = (newUser) => {
+        var allUsersData = users.list;
 
-        allUsersData.push(newUserData);
+        allUsersData.push(getAddInfo(newUser));
 
-        dataAdd(urlUsers, newUserData).then(() => {
-            setUsers({loading: false, list: allUsersData});
-        }).catch(function(users) {
-            console.log('error ' + users);
-        })
+        dataAdd(urlUsers, newUser)
+            .then(() => setUsers({loading: false, list: allUsersData}))
+            .catch(error => console.log('error ' + error));
     };
     
     return (
