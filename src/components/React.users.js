@@ -19,9 +19,7 @@ const users = () => {
     const loadingData = () => {
         dataLoad(urlUsers)
             .then(responseUsers => JSON.parse(responseUsers))
-            .then(result => {
-                parseData(result);
-            })
+            .then(result => parseData(result))
             .catch(e => console.log(e));
     }
 
@@ -52,55 +50,23 @@ const users = () => {
     }
 
     const deleteUser = (deleteId) => {
-        let allUsersData = this.state.rows;
-        let index;
-
-        for (let i = 0; i < allUsersData.length; i++) {
-            if (allUsersData[i].id === deleteId) {
-                index = i;     
-            }
-        }
-
-        allUsersData.splice(index, 1);
-
-        dataDelete(urlUsers, deleteId).then(() => {
-            setUsers({loading: false, list: allUsersData});
-        }).catch(function(users) {
-            console.log('error ' + users);
-        })
+        let allUsers = users.list.filter(user => user.id !== deleteId);
+        dataDelete(urlUsers, deleteId)
+            .then(() => setUsers({loading: false, list: allUsers}))
+            .catch(users => console.log('error ' + users));
     };
 
-    const updateUser = (id, name, company, unit, finishDate) => {
-        let allUsersData = this.state.rows;
-        let updateShortUserData = {
-            id: id,
-            name: name,
-            company: company,
-            unit: unit,
-            finishDate: finishDate
-        };
+    const updateUser = (user) => {
+        let allUsers = users.list;
+        let refreshUser = getAddInfo(user);
 
-        let updateLongUserData = {
-            id: id,
-            name: name,
-            company: company,
-            unit: unit,
-            finishDate: finishDate,
-            status: this.getStatus(finishDate),
-            days: this.getDays(finishDate)
-        };
-
-        for (let i = 0; i < allUsersData.length; i++) {
-            if (allUsersData[i].id === id) {
-                allUsersData[i] = updateLongUserData;
-            }
+        for (let i = 0; i < allUsers.length; i++) {
+            if (allUsers[i].id === user.id) allUsers[i] = refreshUser;
         }
 
-        dataUpdate(urlUsers, updateShortUserData, id).then(users => {
-            setUsers({loading: false, list: allUsersData});
-        }).catch(function(users) {
-            console.log('error ' + users);
-        })
+        dataUpdate(urlUsers, refreshUser, user.id)
+            .then(() => setUsers({loading: false, list: allUsers}))
+            .catch((users) => console.log('error ' + users));
     };
 
     const addUser = (id, name, company, unit, finishDate) => {

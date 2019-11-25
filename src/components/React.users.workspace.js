@@ -28,7 +28,7 @@ const usersWorkspace = (props) => {
             <div className="users__data">
                 <h2 className="users__title">Учетные записи пользователей</h2>
                 <UsersTable
-                    rows={presentUsers}
+                    users={presentUsers}
                     deleteUser={props.deleteUser}
                     updateUser={props.updateUser}/>
             </div>

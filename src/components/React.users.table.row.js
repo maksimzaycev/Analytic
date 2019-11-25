@@ -1,132 +1,103 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt as fasTrash} from '@fortawesome/free-solid-svg-icons'
 import { faChartBar as fasChartBar} from '@fortawesome/free-solid-svg-icons'
 import { faPencilAlt as fasPencil} from '@fortawesome/free-solid-svg-icons'
 import { faCheck as fasCheck} from '@fortawesome/free-solid-svg-icons'
+import { faBars as fasBars} from '@fortawesome/free-solid-svg-icons'
 
 import '../css/main.css';
 
-class UsersManagerRowTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            edit: false,
-            id: props.id,
-            name: props.name,
-            company: props.company,
-            unit: props.unit,
-            finishDate: props.finishDate,
-            days: props.days,
-            status: props.status
-        };
-    }
+const usersManagerRowTable = (props) => {
+    let [user, setUser] = useState({});
+    let [edit, setEdit] = useState(false);
+    let [actions, setActions] = useState(false);
     
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        this.setState({
-            id: nextProps.id,
-            name: nextProps.name,
-            company: nextProps.company,
-            unit: nextProps.unit,
-            finishDate: nextProps.finishDate,
-            days: nextProps.days,
-            status: nextProps.status
-        });
-    }
+    useEffect(() => setUser(props.user), [props.user]);
 
-    saveClick = () => {
-        this.setState({
-            edit: false,
-        }, this.props.update(this.state.id, this.state.name, this.state.company, this.state.unit, this.state.finishDate));
+    let saveClick = () => {
+        setEdit(false)
+        setActions(false)
+        props.updateUser(user);
     };
 
-    editClick = () => {
-        this.setState({
-            edit: true
-        });
-    };
+    let editClick = () => setEdit(true);
 
-    removeClick = () => {
-        this.props.remove(this.state.id);
-    };
+    let removeClick = () => props.deleteUser(user.id);
 
-    handleInputChange = (event) => {
+    let handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
-        const name = target.name;
-        
-        this.setState({
-            [name]: value
-        });
-    }
+        const name = target.name;        
+        let curUser = user;
 
-    handleDateChange = (event) => {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        
-        this.setState({
-            [name]: value
-        });
-    }
+        curUser[name] = value;
+        setUser(curUser);
+    };
 
-    rendNorm () {
+    let toggleActions = () => {
+        setActions(!actions);
+    };
+
+    let rendNorm = () => {
         return (
-            <tr className="users__row users__row--body">
+            <tr className="users__row users__row--body" data-id={user.id}>
                 <td className="users__cell users__cell--body users__cell--action">
-                    <Link to={{ pathname: '/user/' + this.state.id}}>
-                        <FontAwesomeIcon className="users__actionIcon" size="xs" icon={fasChartBar} onClick={this.editClick} />
+                    <Link to={{ pathname: '/user/' + user.id}}>
+                        <FontAwesomeIcon className="users__actionIcon users__actionIcon--unpushed" size="xs" icon={fasChartBar} onClick={editClick} />
                     </Link>
                 </td>
-                <td className="users__cell users__cell--body users__cell--name left">{this.state.name}</td>
-                <td className="users__cell users__cell--body users__cell--company left">{this.state.company}</td>
-                <td className="users__cell users__cell--body users__cell--unit left">{this.state.unit}</td>
-                <td className={"users__cell users__cell--body users__cell--finishDate" + this.state.status}>{this.state.finishDate}</td>
-                <td className={"users__cell users__cell--body users__cell--days" + this.state.status}>{this.state.days}</td>
+                <td className="users__cell users__cell--body users__cell--name left">{user.name}</td>
+                <td className="users__cell users__cell--body users__cell--company left">{user.company}</td>
+                <td className="users__cell users__cell--body users__cell--unit left">{user.unit}</td>
+                <td className={"users__cell users__cell--body users__cell--finishDate" + user.status}>{user.finishDate}</td>
+                <td className={"users__cell users__cell--body users__cell--days" + user.status}>{user.days}</td>
                 <td className="users__cell users__cell--body users__cell--actions">
-                    <FontAwesomeIcon className="users__actionIcon" size="xs" icon={fasPencil} onClick={this.editClick} />
-                    {" "}
-                    <FontAwesomeIcon className="users__actionIcon" size="xs" icon={fasTrash} onClick={this.removeClick} />
+                    { (!actions) ? <FontAwesomeIcon className="users__actionIcon--unpushed" size="xs" icon={fasBars} onClick={toggleActions} /> : (
+                    <span>
+                        <FontAwesomeIcon className="users__actionIcon users__actionIcon--unpushed" size="xs" icon={fasPencil} onClick={editClick} />
+                        <FontAwesomeIcon className="users__actionIcon users__actionIcon--unpushed" size="xs" icon={fasTrash} onClick={removeClick} />
+                        <FontAwesomeIcon className="users__actionIcon users__actionIcon--pushed" size="xs" icon={fasBars} onClick={toggleActions} />
+                    </span>
+                    )}
                 </td>
             </tr>
         );
     }
 
-    rendEdit () {
+    let rendEdit = () => {
         return (
             <tr className="users__row users__row--body">
                 <td className="users__cell users__cell--body users__cell--action"></td>
                 <td className="users__cell users__cell--body users__cell--name">
-                    <input className="users__edit left" type="text" name="name" value={this.state.name} onChange={this.handleInputChange}></input>
+                    <input className="users__edit left" type="text" name="name" defaultValue={user.name} onChange={handleInputChange}></input>
                 </td>
                 <td className="users__cell users__cell--body users__cell--company">
-                    <input className="users__edit left" type="text" name="company" value={this.state.company} onChange={this.handleInputChange}></input>
+                    <input className="users__edit left" type="text" name="company" defaultValue={user.company} onChange={handleInputChange}></input>
                 </td>
                 <td className="users__cell users__cell--body users__cell--unit">
-                    <input className="users__edit left" type="text" name="unit" value={this.state.unit} onChange={this.handleInputChange}></input>
+                    <input className="users__edit left" type="text" name="unit" defaultValue={user.unit} onChange={handleInputChange}></input>
                 </td>
                 <td className="users__cell users__cell--body users__cell--finishDate">
-                    <input className="users__edit" type="text" name="finishDate" value={this.state.finishDate} onChange={this.handleInputChange}></input>
+                    <input className="users__edit" type="text" name="finishDate" defaultValue={user.finishDate} onChange={handleInputChange}></input>
                 </td>
                 <td className="users__cell users__cell--body users__cell--days">
-                    <input className={"users__edit" + this.state.status} type="text" name="days" value={this.state.days} disabled></input>
+                    <input className={"users__edit" + user.status} type="text" name="days" defaultValue={user.days} disabled></input>
                 </td>
                 <td className="users__cell users__cell--body users__cell--actions">
-                    <FontAwesomeIcon className="users__actionIcon" size="xs" icon={fasCheck} onClick={this.saveClick} />
+                    <FontAwesomeIcon className="users__actionIcon users__actionIcon--unpushed" size="xs" icon={fasCheck} onClick={saveClick} />
                 </td>
             </tr>
         );
     }
 
-    render() {
-        if (this.state.edit) {
-            return this.rendEdit();
-        } else {
-            return this.rendNorm();
-        }
+    if (edit) {
+        return rendEdit();
+    } else {
+        return rendNorm();
     }
 
 }
 
-export default UsersManagerRowTable;
+export default usersManagerRowTable;

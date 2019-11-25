@@ -7,7 +7,7 @@ import { faSort as fasSort} from '@fortawesome/free-solid-svg-icons'
 import '../css/main.css';
 
 const usersTable = (props) => {
-    let [rows, setRows] = useState(props.rows);
+    let [users, setUsers] = useState(props.users);
     let [sortingName, setSortingName] = useState(false);
     let [sortingCompany, setSortingCompany] = useState(false);
     let [sortingUnit, setSortingUnit] = useState(false);
@@ -15,7 +15,7 @@ const usersTable = (props) => {
     let [sortingDays, setSortingDays] = useState(false);
 
     useEffect(() => {
-        let sortRows = props.rows;
+        let sortRows = props.users;
         let toggleSort = sortingName;
 
         sortRows.sort((a, b) => {
@@ -31,14 +31,14 @@ const usersTable = (props) => {
         if (toggleSort) sortRows.reverse()
         toggleSort = !toggleSort;
 
-        setRows(sortRows);
+        setUsers(sortRows);
         setSortingName(toggleSort);
 
-    }, [props.rows]);
+    }, [props.users]);
 
     const sortByName = () => {
         var toggleSort = sortingName;
-        var sortRows = rows;
+        var sortRows = users;
 
         sortRows.sort((a, b) => {
             var nameA = a.name.toLowerCase();
@@ -54,13 +54,13 @@ const usersTable = (props) => {
 
         toggleSort = !toggleSort;
 
-        setRows(sortRows);
+        setUsers(sortRows);
         setSortingName(toggleSort);
     };
 
     const sortByDays = () => {
         var toggleSort = sortingDays;
-        var sortRows = rows;
+        var sortRows = users;
 
         sortRows.sort((a, b) => a.days - b.days);
         
@@ -68,13 +68,13 @@ const usersTable = (props) => {
 
         toggleSort = !toggleSort;
 
-        setRows(sortRows);
+        setUsers(sortRows);
         setSortingDays(toggleSort);
     };
 
     const sortByCompany = () => {
         var toggleSort = sortingCompany;
-        var sortRows = rows;
+        var sortRows = users;
 
         sortRows.sort(function(a, b) {
             var companyA = a.company.toLowerCase();
@@ -90,13 +90,13 @@ const usersTable = (props) => {
 
         toggleSort = !toggleSort;
 
-        setRows(sortRows);
+        setUsers(sortRows);
         setSortingCompany(toggleSort);
     };
 
     const sortByUnit = () => {
         var toggleSort = sortingUnit;
-        var sortRows = rows;
+        var sortRows = users;
 
         sortRows.sort((a, b) => {
             var companyA = a.unit.toLowerCase();
@@ -112,13 +112,13 @@ const usersTable = (props) => {
 
         toggleSort = !toggleSort;
 
-        setRows(sortRows);
+        setUsers(sortRows);
         setSortingUnit(toggleSort);
     };
 
     const sortByFinishDate = () => {
         let toggleSort = sortingFinishDate;
-        let sortRows = rows;
+        let sortRows = users;
 
         sortRows.sort((a, b) => {
             let dateA = moment(b.finishDate, 'DD.MM.YY');
@@ -130,15 +130,15 @@ const usersTable = (props) => {
 
         toggleSort = !toggleSort;
 
-        setRows(sortRows);
+        setUsers(sortRows);
         setSortingFinishDate(toggleSort);
     };
 
-    console.log(rows)
+    console.log(users);
 
     return (
         <table className="users__table">
-            <thead>
+            <thead className="users__thead">
                 <tr className="users__row table__row--head">
                     <td className="users__cell users__cell--head users__cell--action"></td>
                     <td className="users__cell users__cell--head users__cell--name left"><FontAwesomeIcon className="sortIcon" icon={fasSort} color="#0079c2" onClick={sortByName} />{" "}Имя пользователя</td>
@@ -151,17 +151,11 @@ const usersTable = (props) => {
             </thead>
             <tbody>
             {
-                (rows.length !== 0) ? (
-                rows.map(row => (
+                (users.length !== 0) ? (
+                users.map(user => (
                     <UsersRowTable
-                        key={row.id}
-                        id={row.id}
-                        name={row.name}
-                        company={row.company}
-                        unit={row.unit}
-                        status={row.status}
-                        days={row.days}
-                        finishDate={row.finishDate}
+                        key={user.id}
+                        user={user}
                         updateUser={props.updateUser}
                         deleteUser={props.deleteUser}
                     /> )
