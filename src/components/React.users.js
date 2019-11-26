@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from './React.nav';
-import moment from 'moment'
+import moment from 'moment';
+import Context from './React.context';
 import UsersWorkspace from './React.users.workspace';
 import dataLoad from '../models/dataLoad';
 import dataAdd from '../models/dataAdd';
@@ -13,6 +14,7 @@ const urlUsers = 'http://localhost:3000/users';
 
 const users = () => {
     let [users, setUsers] = useState({loading: true, list: []});
+    let [presentUsers, setPresentUsers] = useState([]);
     
     useEffect(() => loadingData(), []);
 
@@ -26,6 +28,7 @@ const users = () => {
     const parseData = (usersList) => {
         let newUsersList = usersList.map(user => getAddInfo(user))
         setUsers({loading: false, list: newUsersList});
+        setPresentUsers(newUsersList)
     }
 
     const getAddInfo = (user) => {
@@ -52,7 +55,10 @@ const users = () => {
     const deleteUser = (deleteId) => {
         let allUsers = users.list.filter(user => user.id !== deleteId);
         dataDelete(urlUsers, deleteId)
-            .then(() => setUsers({loading: false, list: allUsers}))
+            .then(() => {
+                setUsers({loading: false, list: allUsers});
+                setPresentUsers(allUsers);
+            })
             .catch(error => console.log('error ' + error));
     };
 
@@ -65,19 +71,27 @@ const users = () => {
         }
 
         dataUpdate(urlUsers, refreshUser, user.id)
-            .then(() => setUsers({loading: false, list: allUsers}))
+            .then(() => {
+                setUsers({loading: false, list: allUsers});
+                setPresentUsers(allUsers);
+            })
             .catch(error => console.log('error ' + error));
     };
 
     const addUser = (newUser) => {
-        var allUsersData = users.list;
+        let allUsersData = users.list;
 
         allUsersData.push(getAddInfo(newUser));
 
         dataAdd(urlUsers, newUser)
-            .then(() => setUsers({loading: false, list: allUsersData}))
+            .then(() => {
+                setUsers({loading: false, list: allUsersData});
+                setPresentUsers(allUsersData);
+            })    
             .catch(error => console.log('error ' + error));
     };
+
+    const findUsers = (filtredVisits) => setPresentUsers(filtredVisits);
     
     return (
         <div id="maskComponent">
@@ -86,12 +100,9 @@ const users = () => {
                 <Navigation activeItem={7712} />
             </div>
             <div className="panel" id="panel">
-                <UsersWorkspace
-                    users={users.list}
-                    addUser={addUser}
-                    deleteUser={deleteUser}
-                    updateUser={updateUser}
-                />
+                <Context.Provider value={{users: users.list, presentUsers: presentUsers, addUser: addUser, deleteUser: deleteUser, updateUser: updateUser, findUsers: findUsers }} >
+                    <UsersWorkspace/>
+                </Context.Provider>
             </div>                        
         </div>
     );

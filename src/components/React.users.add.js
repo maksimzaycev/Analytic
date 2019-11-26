@@ -1,13 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import Context from './React.context';
 import '../css/main.css';
 
-const addUsersManager = (props) => {
+const addUsersManager = () => {
     let [newUser, setNewUser] = useState({
         name: '',
         company: '',
         unit: '',
         finishDate: ''
     });
+
+    const { addUser } = useContext(Context);
+    const { users } = useContext(Context);
     
     useEffect(() => {
         var inputs = document.querySelectorAll('.users__input');
@@ -37,7 +41,7 @@ const addUsersManager = (props) => {
         let inputsValid = checkInputs();
 
         if (!inputsValid) {
-            props.addUser({
+            addUser({
                 id: getRandomUserId(),
                 name: newUser.name,
                 company: newUser.company,
@@ -68,7 +72,7 @@ const addUsersManager = (props) => {
 
     const getRandomUserId = () => {
         var unUniqueId = true;
-        var currentUsers = props.currentUsers;
+        var currentUsers = users;
         do {
             var rand = 1000 - 0.5 + Math.random() * (9999 - 1000 + 1)
             var newId = Math.round(rand);

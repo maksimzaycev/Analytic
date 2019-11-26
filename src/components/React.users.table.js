@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import Context from './React.context';
 import UsersRowTable from './React.users.table.row';
 import UsersRowNull from './React.users.table.rowNull';
 import moment from 'moment'
@@ -6,35 +7,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSort as fasSort} from '@fortawesome/free-solid-svg-icons'
 import '../css/main.css';
 
-const usersTable = (props) => {
-    let [users, setUsers] = useState(props.users);
+const usersTable = () => {
+    const { presentUsers } = useContext(Context);
+
+    let [users, setUsers] = useState(presentUsers);
     let [sortingName, setSortingName] = useState(false);
     let [sortingCompany, setSortingCompany] = useState(false);
     let [sortingUnit, setSortingUnit] = useState(false);
     let [sortingFinishDate, setSortingFinishDate] = useState(false);
     let [sortingDays, setSortingDays] = useState(false);
 
-    useEffect(() => {
-        let sortRows = props.users;
-        let toggleSort = sortingName;
-
-        sortRows.sort((a, b) => {
-            var nameA = a.name.toLowerCase();
-            var nameB = b.name.toLowerCase();
-            if (nameA < nameB)
-                return -1
-            if (nameA > nameB)
-                return 1
-            return 0
-        });
-        
-        if (toggleSort) sortRows.reverse()
-        toggleSort = !toggleSort;
-
-        setUsers(sortRows);
-        setSortingName(toggleSort);
-
-    }, [props.users]);
+    useEffect(() => setUsers(presentUsers), [presentUsers]);
 
     const sortByName = () => {
         var toggleSort = sortingName;
@@ -134,8 +117,6 @@ const usersTable = (props) => {
         setSortingFinishDate(toggleSort);
     };
 
-    console.log(users);
-
     return (
         <table className="users__table">
             <thead className="users__thead">
@@ -156,8 +137,6 @@ const usersTable = (props) => {
                     <UsersRowTable
                         key={user.id}
                         user={user}
-                        updateUser={props.updateUser}
-                        deleteUser={props.deleteUser}
                     /> )
                 )) : <UsersRowNull />
             }

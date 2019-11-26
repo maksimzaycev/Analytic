@@ -1,4 +1,5 @@
-import React, { useState, useEffect }from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import Context from './React.context';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt as fasTrash} from '@fortawesome/free-solid-svg-icons'
@@ -13,26 +14,28 @@ const usersManagerRowTable = (props) => {
     let [user, setUser] = useState({});
     let [edit, setEdit] = useState(false);
     let [actions, setActions] = useState(false);
+
+    const { deleteUser } = useContext(Context);
+    const { updateUser } = useContext(Context);
     
     useEffect(() => setUser(props.user), [props.user]);
 
+    let editClick = () => setEdit(true);
+    let removeClick = () => deleteUser(user.id);
     let saveClick = () => {
         setEdit(false)
         setActions(false)
-        props.updateUser(user);
+        updateUser(user);
     };
-
-    let editClick = () => setEdit(true);
-
-    let removeClick = () => props.deleteUser(user.id);
-
+    
     let handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
         const name = target.name;        
+        
         let curUser = user;
-
         curUser[name] = value;
+
         setUser(curUser);
     };
 
@@ -68,7 +71,7 @@ const usersManagerRowTable = (props) => {
 
     let rendEdit = () => {
         return (
-            <tr className="users__row users__row--body">
+            <tr className="users__row users__row--body" data-id={user.id}>
                 <td className="users__cell users__cell--body users__cell--action"></td>
                 <td className="users__cell users__cell--body users__cell--name">
                     <input className="users__edit left" type="text" name="name" defaultValue={user.name} onChange={handleInputChange}></input>

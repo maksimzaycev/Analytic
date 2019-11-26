@@ -1,28 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Context from './React.context';
 import '../css/main.css';
 
-class FindUsersManager extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleSearch = this.handleSearch.bind(this);
-    }
+const findUsersManager = () => {
+    console.log(useContext(Context));
+    const { users } = useContext(Context);
+    const { findUsers } = useContext(Context);
 
-    handleSearch(event) {
+    const handleSearch = (event) => {
         var searchQuery = event.target.value.toLowerCase();
-        var foundProjects = this.props.presentRows.filter(function(el) {
+        var foundProjects = users.filter((el) => {
             var searchValue1 = el.name.toLowerCase();
             var searchValue2 = el.company.toLowerCase();
             var searchValue3 = el.unit.toLowerCase();
             return ((searchValue1.indexOf(searchQuery) !== -1) || (searchValue2.indexOf(searchQuery) !== -1) || (searchValue3.indexOf(searchQuery) !== -1));
         });
-        this.props.find(foundProjects);
+        findUsers(foundProjects);
     }
 
-    render() {
-        return (
-            <input type="text" className="userbar__finder" onChange={this.handleSearch} placeholder="Поиск пользователя..." />
-        );
-    }
+
+    return (
+        <input type="text" className="userbar__finder" onChange={handleSearch} placeholder="Поиск пользователя..." />
+    );
 }
 
-export default FindUsersManager;
+export default findUsersManager;
