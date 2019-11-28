@@ -14,14 +14,16 @@ const visits = () => {
     let [period, setPeriod] = useState(moment(new Date()).format('MM.YYYY'));
     let [logs, setLogs] = useState({loading:true, list:[]});
 
-    useEffect(() => {
+    useEffect(() => loadingData(), [period]);
+
+    let loadingData = () => {
         dataLoad(urlLogs + '?period=' + period)
             .then(responseLogs => JSON.parse(responseLogs))
             .then(resultLogs => {
                 setLogs({loading:false, list: resultLogs});
             })
-            .catch(error => console.log('error ' + error));
-    },[period]);
+            .catch(error => console.log('error: ' + error));
+    };
     
     let activity = useMemo (() => {
         var usersActivity= [];
