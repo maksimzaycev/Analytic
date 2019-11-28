@@ -8,8 +8,6 @@ import 'react-vis/dist/style.css';
 import '../css/main.css';
 
 const reportsWorkspace = (props) => {
-    console.log('Aaa');
-    console.log(props.aaa);
     let [reports, setReports] = useState(props.reports);
     let [presentReports, setPresentReports] = useState(props.presentReports);
     let [defaultPeriod, setDefaultPeriod] = useState(moment(new Date()).format('MM.YYYY'));
@@ -17,9 +15,6 @@ const reportsWorkspace = (props) => {
     useEffect(() => {
         setReports(props.reports);
         setPresentReports(props.presentReports);
-        
-        console.log('Обновились PROPS в WORKSPACE');
-        console.log(props);
     }, [props]);
 
     return (

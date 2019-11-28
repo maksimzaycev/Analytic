@@ -5,6 +5,7 @@ import {
     XYPlot,
     XAxis,
     YAxis,
+    Hint,
     HorizontalGridLines,
     VerticalGridLines,
     VerticalBarSeries
@@ -14,7 +15,8 @@ class ReportsChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            charts: props.presentReports
+            charts: props.presentReports,
+            value: false
         };
     }
 
@@ -37,7 +39,7 @@ class ReportsChart extends React.Component {
         var widthChart = Math.round(document.body.clientWidth * 0.80);
         return (
             <div>              
-                <XYPlot xType="ordinal" width={widthChart} height={300}>
+                <XYPlot xType="ordinal" width={widthChart} height={300} onMouseLeave={() => this.setState({value: false})}>
                     <HorizontalGridLines/>
                     <VerticalGridLines />
                     <XAxis tickLabelAngle={0} />
@@ -54,6 +56,7 @@ class ReportsChart extends React.Component {
                             data={this.props.defaultChart}
                         />
                     }
+                    {this.state.value ? <Hint value={this.state.value} /> : null}
                 </XYPlot>
             </div>
         );
