@@ -13,21 +13,18 @@ import {
 class ReportsChart extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            charts: props.chartReports
+            charts: props.presentReports
         };
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
-            charts: nextProps.chartReports
+            charts: nextProps.presentReports
         });
     }
 
     render() {
-        
-
         var reports = this.state.charts;
         var viewed = 0;
 

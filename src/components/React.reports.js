@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from './React.nav';
 import dataLoad from '../models/dataLoad';
 import Loader from './React.loader';
@@ -21,56 +21,49 @@ const COLORS = [
 
 const urlLogs = 'http://localhost:3000/logs';
 
-class Reports extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            chartReports: [],
-            startDate: '',
-            finishDate: '',
-            loading: false,
-            settingPeriod: moment(new Date()).format('MM.YYYY')
-        };
-    }
+const reports = () => {
+    let [period, setPeriod] = useState('06.2019');
+    let [startDate, setStartDate] = useState('');
+    let [finishDate, setFinishDate] = useState('');
+    let [logs, setLogs] = useState({loading:true, list:[]});
+    let [reports, setReports] = useState([]);
+    let [presentReports, setPresentReports] = useState([]);
+    let [defaultChart, setDefaultChart] = useState([]);
 
-    UNSAFE_componentWillMount() {
-        this.loadData(this.state.settingPeriod);
-    }
+    useEffect(() => loadingData(), []);
 
-    loadData(period) {
+    let loadingData = () => {
         dataLoad(urlLogs + '?period=' + period)
             .then(responseLogs => JSON.parse(responseLogs))
-            .then(logs => this.parseData(logs, period))
-            .catch(e => console.log(e));
-    }
+            .then(resultLogs => {
+                parseData(resultLogs);
+            })
+            .catch(error => console.log('error: ' + error));
+    };
 
-    parseData(usersLogs, period) {
-        let startDate = moment('01.' + period, 'DD.MM.YYYY');
-        let finishDate = moment('01.' + period, 'DD.MM.YYYY').add(1, 'month');
+    let parseData = (resultLogs) => {
         
-        let allLogs = this.getAllLogs(usersLogs);
-        let listReports = this.getReports(allLogs);
-        let chartReports = this.getDataReports(listReports, allLogs, startDate.format('DD.MM.YYYY'), finishDate.format('DD.MM.YYYY'));
-        let defaultChart = this.getDefaultChart();
+        let startDate = moment('01.' + period, 'DD.MM.YYYY');
+        let finishDate = moment('01.' + period, 'DD.MM.YYYY').add(1, 'month');        
+        let allLogs = getAllLogs(resultLogs);
+        let listReports = getReports(allLogs);
+        let chartReports = getDataReports(listReports, allLogs, startDate.format('DD.MM.YYYY'), finishDate.format('DD.MM.YYYY'));
 
-        this.setState({
-            chartReports: chartReports,
-            defaultChart: defaultChart,
-            startDate: startDate.format('DD.MM'),
-            finishDate: finishDate.format('DD.MM'),
-            loading: true
-        });
-    }
+        setLogs({loading: false, list: resultLogs});
+        setReports(chartReports);
+        setPresentReports(chartReports);
+        setDefaultChart(getDefaultChart());
+        setStartDate(startDate.format('DD.MM'));
+        setFinishDate(finishDate.format('DD.MM'));
+    };
 
-    setPeriod = (changedPeriod) => {
-        this.setState({
-            loading: false
-        });
+    let changePeriod = (changedPeriod) => {
+        setLogs({loading: true, list: logs.list});
+        setPeriod(changedPeriod);
+        loadingData();
+    };
 
-        this.loadData(changedPeriod);
-    }
-
-    getAllLogs(userLogs) {
+    let getAllLogs = (userLogs) => {
         let allLogs = [];
 
         for (let i = 0; i < userLogs.length; i++) {
@@ -81,9 +74,9 @@ class Reports extends React.Component {
         }
 
         return allLogs;
-    }
+    };
 
-    getReports(allLogs) {
+    let getReports = (allLogs) => {
         let reports = [];
 
         for (let i = 0; i < allLogs.length; i++) {
@@ -109,9 +102,9 @@ class Reports extends React.Component {
         }
 
         return reports;
-    }
+    };
 
-    getDataReports(listReports, allLogs, startDate, finishDate) {
+    let getDataReports = (listReports, allLogs, startDate, finishDate) => {
         for (let i = 0; i < listReports.length; i++) {
             let presentReport = listReports[i];
             let start = moment(startDate, 'DD.MM.YYYY');
@@ -138,9 +131,9 @@ class Reports extends React.Component {
         }
 
         return listReports;
-    }
+    };
 
-    getDefaultChart() {
+    let getDefaultChart = () => {
         let currentlyDate = moment(new Date(), 'DD.MM');
         let startDate = currentlyDate.subtract(15, "days");
         let defaultDays = [];
@@ -157,29 +150,41 @@ class Reports extends React.Component {
         }
 
         return defaultDays;
+    };
+
+    const findReports = (foundReports) => setPresentReports(foundReports);
+
+    const toggleReport = (type) => {
+        let changedCharts = presentReports.map((report) => {
+            if (report.link === type) report.display = !report.display;
+            return report
+        });
+
+        setPresentReports(changedCharts);
     }
 
-    render() {
-        return (
-            <div id="maskComponent">
-                {!this.state.loading ? <Loader /> : null}
-                <div className="sidebar" id="sidebar">
-                    <Navigation activeItem={7718} />
-                </div>
-                <div className="panel" id="panel">
-                    <ReportsWorkspace
-                        chartReports={this.state.chartReports}
-                        startDate={this.state.startDate}
-                        finishDate={this.state.finishDate}
-                        defaultChart={this.state.defaultChart}
-                        settingPeriod={this.state.settingPeriod}
-                        setPeriod={this.setPeriod}
-                    />
-                </div>                        
+    return (
+        <div id="maskComponent">
+            {logs.loading ? <Loader /> : null}
+            <div className="sidebar" id="sidebar">
+                <Navigation activeItem={7718} />
             </div>
-        );
-    }
+            <div className="panel" id="panel">
+                <ReportsWorkspace
+                    reports={reports}
+                    presentReports={presentReports}
+                    startDate={startDate}
+                    finishDate={finishDate}
+                    defaultChart={defaultChart}
+                    settingPeriod={period}
+                    changePeriod={changePeriod}
+                    findReports={findReports}
+                    toggleReport={toggleReport}
+                />
+            </div>                        
+        </div>
+    );
 }
 
-export default Reports;
+export default reports;
 

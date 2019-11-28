@@ -1,26 +1,19 @@
 import React from 'react';
 import '../css/main.css';
 
-class FindReports extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleSearch = this.handleSearch.bind(this);
-    }
-
-    handleSearch(event) {
+const findReports = (props) => {
+    const handleSearch = (event) => {
         var searchQuery = event.target.value.toLowerCase();
-        var foundUsers = this.props.presentRows.filter(function(el) {
+        var foundUsers = props.reports.filter(function(el) {
             var searchValue1 = el.name.toLowerCase();
             return (searchValue1.indexOf(searchQuery) !== -1);
         });
-        this.props.find(foundUsers);
+        props.findReports(foundUsers);
     }
 
-    render() {
-        return (
-            <input type="text" className="userbar__finder" onChange={this.handleSearch} placeholder="Поиск..." />
-        );
-    }
+    return (
+        <input type="text" className="userbar__finder" onChange={handleSearch} placeholder="Поиск..." />
+    );
 }
 
-export default FindReports;
+export default findReports;
