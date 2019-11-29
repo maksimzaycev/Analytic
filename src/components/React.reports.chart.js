@@ -8,6 +8,8 @@ import {
     Hint,
     HorizontalGridLines,
     VerticalGridLines,
+    LineSeries,
+    Crosshair,
     VerticalBarSeries
 } from 'react-vis';
 
@@ -16,7 +18,8 @@ class ReportsChart extends React.Component {
         super(props);
         this.state = {
             charts: props.presentReports,
-            value: false
+            value: false,
+            crosshairValues: []
         };
     }
 
@@ -25,6 +28,8 @@ class ReportsChart extends React.Component {
             charts: nextProps.presentReports
         });
     }
+
+
 
     render() {
         var reports = this.state.charts;
@@ -39,7 +44,7 @@ class ReportsChart extends React.Component {
         var widthChart = Math.round(document.body.clientWidth * 0.80);
         return (
             <div>              
-                <XYPlot xType="ordinal" width={widthChart} height={300} onMouseLeave={() => this.setState({value: false})}>
+                <XYPlot xType="ordinal" width={widthChart} height={300} >
                     <HorizontalGridLines/>
                     <VerticalGridLines />
                     <XAxis tickLabelAngle={0} />
@@ -49,7 +54,7 @@ class ReportsChart extends React.Component {
                             report.display ?
                             <VerticalBarSeries
                                 data={report.monthData}
-                                color={report.color}
+                                color={report.color} 
                             /> : null
                         )) :
                         <VerticalBarSeries

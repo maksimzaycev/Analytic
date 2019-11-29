@@ -5,6 +5,7 @@ import {
   XYPlot,
   XAxis,
   YAxis,
+  Crosshair,
   HorizontalGridLines,
   VerticalGridLines,
   DiscreteColorLegend,
@@ -24,16 +25,24 @@ class MonthChart extends React.Component {
         this.toggleChart = this.toggleChart.bind(this);
 
         this.state = {
-            charts: []
+            charts: [],
+            crosshairValues: []
         };
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-
         this.setState({
             charts: this.restructuralCharts(nextProps.charts)
         });
     }
+
+    _onMouseLeave = () => {
+        this.setState({crosshairValues: []});
+    };
+
+    _onNearestX = (value, {index}) => {
+        this.setState({crosshairValues: this.state.charts.map(d => d[index])});
+    };
 
     restructuralCharts(charts) {
         var resultCharts = Object.keys(charts).map(function(key) {
@@ -74,7 +83,14 @@ class MonthChart extends React.Component {
                     <span className="title__button title__button--active" onClick={this.toggleChart} data-type="visits">Визиты</span>
                     <span className="title__button title__button--active" onClick={this.toggleChart} data-type="views">Просмотры</span>
                 </div>                
-                <XYPlot xType="ordinal" width={widthChart} height={300}>
+                <XYPlot
+                    xType="ordinal"
+                    width={widthChart}
+                    height={300}
+                    onMouseLeave={this._onMouseLeave}
+                >
+                
+                
                     <HorizontalGridLines/>
                     <VerticalGridLines />
                     <XAxis tickLabelAngle={0} />
@@ -88,6 +104,7 @@ class MonthChart extends React.Component {
                                 curve={'curveMonotoneX'}
                                 data={chart.data}
                                 color={chart.color}
+                                onNearestX={this._onNearestX}
                             /> : 
                             <VerticalBarSeries
                                 key={chart.chartId}
@@ -95,9 +112,14 @@ class MonthChart extends React.Component {
                                 curve={'curveMonotoneX'}
                                 data={this.props.defaultChart}
                                 color={chart.color}
+                                onNearestX={this._onNearestX}
                             />
                         ))
                     }
+                    <Crosshair
+                        values={this.state.crosshairValues}
+                        className={'test-class-name'}
+                    />
                 </XYPlot>
                 <DiscreteColorLegend className="chart__legend" width={770} items={ITEMS} />
             </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from './React.nav';
+import Graph from './React.graph';
 import dataLoad from '../models/dataLoad';
 import Loader from './React.loader';
 import '../css/main.css';
@@ -29,7 +30,7 @@ const people = (props) => {
                 <Navigation activeItem={7712} />
             </div>
             <div className="panel" id="panel">
-
+                <Graph/>
             </div>                       
         </div>
     );
